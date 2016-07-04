@@ -1,0 +1,23 @@
+<ion-item-group>
+    <ion-item-divider (click)='toogle(selectedDay)'>
+
+        <ion-icon [name]="iconName"></ion-icon>
+        {{selectedDay.date}} ({{selectedDay.day}})
+    </ion-item-divider>
+    <div *ngIf='showSessions'>
+
+        <ion-item *ngFor="#s of selectedDay.sessions">
+
+            <ion-label>{{s.start}} - {{s.end}}</ion-label>
+
+            <ion-checkbox dark [(ngModel)]='s.avaiable'></ion-checkbox>
+            <div item-right *ngFor='#u of s.users'>
+                <ion-avatar item-right>
+                    <img src="https://openclipart.org/image/2400px/svg_to_png/130795/Trollface.png" />
+                </ion-avatar>
+            </div>
+
+            <ion-badge item-right>{{s.users.length}}</ion-badge>
+        </ion-item>
+    </div>
+</ion-item-group>
