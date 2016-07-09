@@ -1,3 +1,4 @@
+import {Alert} from "../node_modules/ionic-angular/components/alert/alert";
 import {App, Platform, IonicApp, MenuController, NavController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
@@ -52,28 +53,25 @@ export class MyApp {
         nav.setRoot(page);
     }
     ngOnInit() {
-        var user = localStorage.getItem('user');
-        var pass = localStorage.getItem('password');
-        if (user && pass) {
+        var user = parseInt(localStorage.getItem('user'));
+        var authtoken = localStorage.getItem('authtoken');
+
+        if (user && authtoken) {
             var self = this;
-            this.musician_service.login(user, pass).then(
-                user => {
-                    self.global_vars_service.setVar('user', user);
+            this.musician_service.setAuthToken(authtoken);
+            this.musician_service.getMusician(user)
+                .then(user => {
                     self.rootPage = WelcomePage;
-                },
-                (reasson?) => {
-                    if (reasson) {
-                        alert(reasson);
-                    }
-                }
-            );
+                    self.global_vars_service.setVar('user', user);
+                    self.global_vars_service.addVar('authtoken', authtoken);
+                });
         }
-        this.global_vars_service.addVar('user',null);
+        this.global_vars_service.addVar('user', null);
         this.global_vars_service.getObservableVar('user').subscribe(value => {
             if (!value)
                 this.groups = [];
             else {
-              this.groups = value.bands;
+                this.groups = value.bands;
             }
         });
     }

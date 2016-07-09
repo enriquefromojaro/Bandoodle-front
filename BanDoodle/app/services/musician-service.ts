@@ -6,9 +6,9 @@ import 'rxjs/add/operator/toPromise';
 export class MusicianService {
     private base_url = 'http://localhost:8000/api/users/';
     private login_url = 'http://localhost:8000/login/';
-    private _common_headers:RequestOptions = new RequestOptions({
+    private _common_headers: RequestOptions = new RequestOptions({
         headers: new Headers({
-            'Content-Type' : 'application/json',
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
         })
     });
@@ -19,6 +19,14 @@ export class MusicianService {
         return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
     }
 
+    public getMusician(id: number): Promise<Musician> {
+        return this.http.get(this.base_url + id.toString() + '/', this._common_headers).toPromise().then(
+            user => {
+                return new Musician(user.json())
+            }
+        ).catch(this.handleError);
+    }
+
     private extractData(res: Response): Musician[] {
         let musicians = res.json();
         for (let key in musicians) {
@@ -27,11 +35,15 @@ export class MusicianService {
         return musicians;
     }
 
-    public login(username: string, password: string): Promise<Musician> {
+    public login(username: string, password: string): Promise<{ user: Musician, token: string }> {
+        var self = this;
         return this.http.post(this.login_url, JSON.stringify({ username: username, password: password }), this._common_headers)
             .toPromise().then(function(data) {
-                var mus: Musician = new Musician(data.json().user);
-                return mus;
+                let parsed_data = data.json();
+                var mus: Musician = new Musician(parsed_data.user);
+                var token: string = parsed_data.Token;
+                self.setAuthToken(token);
+                return { user: mus, token: token };
             })
             .catch(this.handleError);
     }
@@ -43,6 +55,10 @@ export class MusicianService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
         return Promise.reject(errMsg);
+    }
+
+    public setAuthToken(token: string): void {
+        this._common_headers.headers.set('Authorization', 'Token ' + token)
     }
 
 }
