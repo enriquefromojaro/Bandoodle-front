@@ -6,6 +6,7 @@ var Musician = (function () {
         this.first_name = data.first_name;
         this.email = data.email;
         this.bands = data.bands;
+        this.avatar = data.avatar;
     }
     Musician.prototype.getId = function () {
         return this.id;

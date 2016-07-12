@@ -1,5 +1,6 @@
+import {BandPage} from "./pages/band-page/band-page";
 import {Alert} from "../node_modules/ionic-angular/components/alert/alert";
-import {App, Platform, IonicApp, MenuController, NavController} from 'ionic-angular';
+import {App, Platform, MenuController, NavController, IonicApp} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
 import {LoginPage} from './pages/login/login';
@@ -47,11 +48,19 @@ export class MyApp {
         });
     }
 
-    openPage(page: any) {
+    openPage(page: any, band?: any) {
         this.menu.close();
         let nav = this.app.getComponent('nav');
         nav.setRoot(page);
     }
+
+    openBandPage(band: any) {
+        this.menu.close();
+        let nav = this.app.getComponent('nav');
+        nav.setRoot(BandPage, { band: band });
+    }
+
+
     ngOnInit() {
         var user = parseInt(localStorage.getItem('user'));
         var authtoken = localStorage.getItem('authtoken');

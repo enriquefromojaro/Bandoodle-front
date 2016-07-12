@@ -15,7 +15,7 @@
           <ion-list-header>
             Grupos
           </ion-list-header>
-          <button ion-item *ngFor='#g of groups'(click)='alert(p)'>
+          <button ion-item *ngFor='#g of groups'(click)='openBandPage(g)'>
             {{g.name}}
           </button>
         </ion-list>
