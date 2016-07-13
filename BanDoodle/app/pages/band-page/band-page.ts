@@ -1,6 +1,8 @@
-import {Alert} from "../../../node_modules/ionic-angular/components/alert/alert";
+import {UserListModal} from "../../components/user-list-modal/user-list-modal";
+import {Modal} from "ionic-angular/components/modal/modal";
+import {Alert} from "ionic-angular/components/alert/alert";
 import {BandService} from "../../services/band-service";
-import {Loading} from "../../../node_modules/ionic-angular/components/loading/loading";
+import {Loading} from "ionic-angular/components/loading/loading";
 import {GlobalVarsService} from "../../services/global-vars-service";
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
@@ -40,12 +42,8 @@ export class BandPage {
     }
 
     public show_users() {
-        let alert = Alert.create({
-            title: 'Por implementar',
-            subTitle: 'Este apartado no ha sido desarrollado todavía',
-            buttons: ['OK']
-        });
-        this.nav.present(alert);
+        let modal = Modal.create(UserListModal, { users: this.band.users });
+        this.nav.present(modal);
     }
 
     public show_events() {
@@ -56,12 +54,12 @@ export class BandPage {
         });
         this.nav.present(alert);
     }
-    public nav_to_event(event:any){
-      let alert = Alert.create({
-          title: 'Por implementar',
-          subTitle: 'Este apartado no ha sido desarrollado todavía',
-          buttons: ['OK']
-      });
-      this.nav.present(alert);
+    public nav_to_event(event: any) {
+        let alert = Alert.create({
+            title: 'Por implementar',
+            subTitle: 'Este apartado no ha sido desarrollado todavía',
+            buttons: ['OK']
+        });
+        this.nav.present(alert);
     }
 }
