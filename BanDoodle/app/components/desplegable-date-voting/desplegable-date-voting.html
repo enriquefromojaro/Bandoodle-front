@@ -6,7 +6,7 @@
     </ion-item-divider>
     <div *ngIf='showSessions'>
 
-        <ion-item *ngFor="#s of selectedDay.sessions">
+        <ion-item *ngFor="let s of selectedDay.sessions">
 
             <ion-label>{{s.start}} - {{s.end}}</ion-label>
 

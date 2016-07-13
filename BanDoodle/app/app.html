@@ -4,20 +4,20 @@
     </ion-toolbar>
     <ion-content>
         <ion-list>
-          <ion-list-header>
-            Páginas
-          </ion-list-header>
-            <button ion-item *ngFor="#p of pages" (click)="openPage(p)">
+            <ion-list-header>
+                Páginas
+            </ion-list-header>
+            <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 {{p.name}}
             </button>
         </ion-list>
         <ion-list>
-          <ion-list-header>
-            Grupos
-          </ion-list-header>
-          <button ion-item *ngFor='#g of groups'(click)='openBandPage(g)'>
-            {{g.name}}
-          </button>
+            <ion-list-header>
+                Grupos
+            </ion-list-header>
+            <button ion-item *ngFor='let g of groups' (click)='openBandPage(g)'>
+                {{g.name}}
+            </button>
         </ion-list>
 
     </ion-content>

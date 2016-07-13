@@ -1,3 +1,4 @@
+import {Nav} from "../node_modules/ionic-angular/components/nav/nav";
 import {BandPage} from "./pages/band-page/band-page";
 import {Alert} from "../node_modules/ionic-angular/components/alert/alert";
 import {App, Platform, MenuController, NavController, IonicApp} from 'ionic-angular';
@@ -7,6 +8,7 @@ import {LoginPage} from './pages/login/login';
 import {WelcomePage} from './pages/welcome-page/welcome-page';
 import {MusicianService} from './services/musician-service';
 import {GlobalVarsService} from './services/global-vars-service';
+import {ViewChild } from '@angular/core';
 
 
 @App({
@@ -23,16 +25,17 @@ export class MyApp {
     musician_service: MusicianService;
     global_vars_service: GlobalVarsService
     groups: any;
+    @ViewChild(Nav) nav: Nav;
 
     static get parameters() {
         return [
             [IonicApp],
             [Platform],
             [MenuController],
-            [MusicianService]
+            [MusicianService],
         ];
     }
-    constructor(app, platform, menu, musician_service) {
+    constructor(app, platform, menu, musician_service, nav) {
         this.app = app;
         this.menu = menu;
         this.platform = platform;
@@ -41,6 +44,7 @@ export class MyApp {
     }
 
     ininitializeApp() {
+      var self = this;
         this.platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -50,14 +54,12 @@ export class MyApp {
 
     openPage(page: any, band?: any) {
         this.menu.close();
-        let nav = this.app.getComponent('nav');
-        nav.setRoot(page);
+        this.nav.setRoot(page);
     }
 
     openBandPage(band: any) {
         this.menu.close();
-        let nav = this.app.getComponent('nav');
-        nav.setRoot(BandPage, { band: band });
+        this.nav.setRoot(BandPage, { band: band });
     }
 
 

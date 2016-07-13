@@ -1,4 +1,4 @@
-import {Component, Input} from '../../../node_modules/angular2/core';
+import {Component, Input} from '@angular/core';
 @Component({
   templateUrl:'build/components/navBarMenu/navBarMenu.html',
   selector:'nav-bar-menu',
@@ -8,4 +8,4 @@ import {Component, Input} from '../../../node_modules/angular2/core';
 })
 export class NavBarMenuComponent{
   @Input() title:string;
-}
+};
