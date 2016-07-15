@@ -1,10 +1,12 @@
+import {Band} from "./Band";
 export class Musician {
+    public avatar: string;
     private _id: number;
     public username: string;
     public first_name: string;
     public last_name: string;
     public email: string;
-    public bands: Array<any>;
+    public bands: Band[] | number[];
 
     public constructor(data: any) {
         if (data.id)
@@ -13,6 +15,7 @@ export class Musician {
         this.first_name = data.first_name;
         this.email = data.email;
         this.bands = data.bands;
+        this.avatar = data.avatar;
     }
 
     public get id(): number {
@@ -22,7 +25,4 @@ export class Musician {
     public set id(id: number) {
         this._id = id;
     }
-
-
-
 }

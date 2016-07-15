@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '../../../node_modules/angular2/core';
+import {Component, Input, OnInit} from '@angular/core';
 @Component({
     templateUrl: 'build/components/desplegable-date-voting/desplegable-date-voting.html',
     selector: 'desp-vote-date'

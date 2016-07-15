@@ -1,3 +1,4 @@
+import {Loading} from "../../../node_modules/ionic-angular/components/loading/loading";
 import {Alert} from "../../../node_modules/ionic-angular/components/alert/alert";
 import {Page, NavController} from 'ionic-angular';
 import {MusicianService} from '../../services/musician-service';
@@ -22,6 +23,10 @@ export class LoginPage {
     private global_vars;
     login() {
         var self = this;
+        let loading = Loading.create({
+            content: "Loging in...",
+        });
+        this.nav.present(loading);
         this.musician_service.login(this.username, this.password)
             .then(function(data) {
                 self.global_vars.setVar('user', data.user);
@@ -31,16 +36,19 @@ export class LoginPage {
                     localStorage.setItem('user', data.user.id.toString());
                     localStorage.setItem('authtoken', data.token);
                 }
+                loading.dismiss();
             },
-          (error?)=>{
-            let alert = Alert.create({
-                title: 'Error!!',
-                subTitle: error.message || error,
-                buttons: ['OK']
-            });
-            this.nav.present(alert);
-          })
+            (error?) => {
+                loading.dismiss();
+                let alert = Alert.create({
+                    title: 'Error!!',
+                    subTitle: error.message || error,
+                    buttons: ['OK']
+                });
+                this.nav.present(alert);
+            })
             .catch(err => {
+                loading.dismiss();
                 let alert = Alert.create({
                     title: 'Error!!',
                     subTitle: err.message || err,
