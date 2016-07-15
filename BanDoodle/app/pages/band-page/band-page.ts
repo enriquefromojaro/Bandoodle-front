@@ -6,6 +6,7 @@ import {Loading} from "ionic-angular/components/loading/loading";
 import {GlobalVarsService} from "../../services/global-vars-service";
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
+import {EventListPage} from '../event-list/event-list';
 
 /*
   Generated class for the BandPagePage page.
@@ -47,12 +48,7 @@ export class BandPage {
     }
 
     public show_events() {
-        let alert = Alert.create({
-            title: 'Por implementar',
-            subTitle: 'Este apartado no ha sido desarrollado todavía',
-            buttons: ['OK']
-        });
-        this.nav.present(alert);
+        this.nav.push(EventListPage, {events:this.band.events});
     }
     public nav_to_event(event: any) {
         let alert = Alert.create({

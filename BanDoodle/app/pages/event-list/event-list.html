@@ -1,0 +1,21 @@
+<ion-navbar *navbar>
+    <ion-title>Eventos</ion-title>
+</ion-navbar>
+
+<ion-content padding class="event-list">
+  <ion-searchbar (input)="filterEvents($event)"></ion-searchbar>
+    <ion-list>
+        <ion-item *ngFor = "let event of filterdEvents">
+            <span (click)='openEvent(event)'>
+                {{event.name}} -- {{event.type}}
+            </span>
+            <button danger>
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </ion-item>
+    </ion-list>
+    <button fab (click)="debugMe(day)">
+        <ion-icon name="add"></ion-icon>
+    </button>
+
+</ion-content>
