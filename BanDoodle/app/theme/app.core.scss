@@ -13,3 +13,7 @@
 @import "../pages/login/login.scss";
 @import "../pages/band-page/band-page.scss";
 @import "../pages/event-list/event-list.scss";
+
+ion-tabs ion-navbar-section ion-navbar .back-button {
+    display: inline-block;
+}

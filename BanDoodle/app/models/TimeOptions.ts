@@ -21,7 +21,7 @@ export class TimeOption {
             this.start_time = start_time;
 
         if (typeof end_time === 'string') {
-            this.start_time = this.date;
+            this.end_time = this.date;
             let hour = <any[]>end_time.split(':');
             this.end_time.setHours(hour[0], hour[1], hour[2])
         }

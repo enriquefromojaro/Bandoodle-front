@@ -26,4 +26,8 @@ export class Event {
             }
         }
     }
+
+    public get id(){
+      return this.id;
+    }
 }

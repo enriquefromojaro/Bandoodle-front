@@ -1,0 +1,14 @@
+<ion-navbar *navbar>
+    <ion-title>VoteOptions</ion-title>
+</ion-navbar>
+
+<ion-content padding class="vote-options">
+    <ion-list>
+        <ion-list-header>
+            Opciones disponibles
+        </ion-list-header>
+        <div *ngFor='let date of dates'>
+            <desp-vote-date [timeOptions]='event.time_options|atDate:date'[date]='date'></desp-vote-date>
+        </div>
+    </ion-list>
+</ion-content>

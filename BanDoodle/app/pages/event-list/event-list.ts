@@ -1,3 +1,4 @@
+import {EventPage} from "../event-page/event-page";
 import {NavParams} from "ionic-angular/components/nav/nav-params";
 import {Page, NavController} from 'ionic-angular';
 import {Event} from '../../models/Event';
@@ -33,6 +34,6 @@ export class EventListPage {
     }
 
     openEvent(event:Event){
-      this.nav.push(TabsPage);
+      this.nav.push(EventPage, {eventId:event.id});
     }
 }
