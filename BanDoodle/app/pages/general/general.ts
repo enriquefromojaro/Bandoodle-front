@@ -1,14 +1,21 @@
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
+import {NavParams} from "ionic-angular/components/nav/nav-params";
 import {Page, NavController} from 'ionic-angular';
+import {Event} from '../../models/Event';
 
-/*
-  Generated class for the GeneralPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
-  templateUrl: 'build/pages/general/general.html',
+    templateUrl: 'build/pages/general/general.html',
 })
 export class GeneralPage {
-  constructor(public nav: NavController) {}
+    event: Observable<Event> |Event;
+    constructor(public nav: NavController, private _navParams: NavParams) {
+        var event = this._navParams.get('event');
+        if(event instanceof Subject){
+          this.event = event.asObservable();
+        }
+        else{
+          this.event = event;
+        }
+    }
 }

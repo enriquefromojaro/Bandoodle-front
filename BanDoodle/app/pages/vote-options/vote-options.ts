@@ -6,6 +6,7 @@ import {Event} from '../../models/Event';
 import {AtDatePipe} from '../../pipes/AtDate';
 import {DespDateVotingComponent} from '../../components/desplegable-date-voting/desplegable-date-voting';
 
+
 @Page({
     templateUrl: 'build/pages/vote-options/vote-options.html',
     pipes: [AtDatePipe],
@@ -19,7 +20,7 @@ export class VoteOptionsPage {
         this.event = this._navParams.get('event');
         this.dates = []
         this._event_service = this._navParams.get('event_service');
-        this.event.time_options = this.event.time_options.sort((a: TimeOption, b: TimeOption) => { return a.date.getTime() - b.date.getTime() });
+        this.event.time_options = this.event.time_options.sort((a: TimeOption, b: TimeOption) => a.date.getTime() - b.date.getTime());
         var max_date = null;
         for (let ti_opt of this.event.time_options) {
             if (!max_date || ti_opt.date > max_date) {

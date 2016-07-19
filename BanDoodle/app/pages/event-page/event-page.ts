@@ -7,6 +7,7 @@ import {VoteOptionsPage} from '../vote-options/vote-options';
 import {GeneralPage} from '../general/general';
 import {MapPage} from '../map/map';
 import {Event} from '../../models/Event';
+import {Subject} from 'rxjs/Subject';
 
 
 @Page({
@@ -30,18 +31,20 @@ export class EventPage {
         this._global_vars = GlobalVarsService.getInstance();
         var id = this._navParams.get('eventId');
         let loading = Loading.create({
-            content: "Loading band info...",
+            content: "Loading...",
         });
         this._event_service.setAuthToken(this._global_vars.getVar('authtoken'));
         this.nav.present(loading);
+        this.params = {
+          event:new Subject<any>(),
+          event_service:this._event_service
+        }
         this._event_service.getEvent(id).then(
             (data) => {
                 this.event = new Event(data.name, data.type, data.direction, data.time_options, data.id);
                 loading.dismiss();
-                this.params = {
-                  event:this.event,
-                  event_service:this._event_service
-                }
+                this.params['event'].next(this.event);
+                this.params['event']= this.event;
             }
         );
     }

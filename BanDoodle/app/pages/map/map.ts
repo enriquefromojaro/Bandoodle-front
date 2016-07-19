@@ -1,14 +1,14 @@
+import {Observable} from "rxjs/Observable";
+import {NavParams} from "ionic-angular/components/nav/nav-params";
 import {Page, NavController} from 'ionic-angular';
+import {Event} from '../../models/Event';
 
-/*
-  Generated class for the MapPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
-  templateUrl: 'build/pages/map/map.html',
+    templateUrl: 'build/pages/map/map.html',
 })
 export class MapPage {
-  constructor(public nav: NavController) {}
+    event: Event;
+    constructor(public nav: NavController, private _navParams: NavParams) {
+        this.event = this._navParams.get('event');
+    }
 }
