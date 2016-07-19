@@ -7,10 +7,12 @@ export class TimeOption {
     public voted_by: Musician[];
 
     constructor(start_time: Date | string, end_time: Date | string, date: Date | string, voted_by: Musician[] | Object[], id?: number) {
-        if (typeof date === 'string')
+        if (typeof date === 'string') {
             this.date = new Date(date);
+            this.date.setHours(0, 0, 0, 0);
+        }
         else
-            this.date = <Date>start_time
+            this.date = <Date>start_time;
         if (typeof start_time === 'string') {
             this.start_time = this.date;
             let hour = <any[]>start_time.split(':');
@@ -37,10 +39,12 @@ export class TimeOption {
                 this.voted_by.push(new Musician(elem))
             }
         }
-
         if (id)
             this._id = id;
+    }
 
+    public get id() {
+        return this._id;
     }
 
 

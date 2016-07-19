@@ -16,6 +16,9 @@ export class Musician {
         this.email = data.email;
         this.bands = data.bands;
         this.avatar = data.avatar;
+        if(!this.avatar.startsWith('http')){
+          this.avatar = 'http://localhost:8000'+this.avatar;
+        }
     }
 
     public get id(): number {
