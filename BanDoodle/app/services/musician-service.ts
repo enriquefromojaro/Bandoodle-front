@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Musician} from '../models/Musician';
+import {BACKEND_ROOT} from '../config';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class MusicianService {
-    private base_url = 'http://localhost:8000/api/users/';
-    private login_url = 'http://localhost:8000/login/';
+    private base_url = `${BACKEND_ROOT}/api/users/`;
+    private login_url = `${BACKEND_ROOT}/login/`;
     private _common_headers: RequestOptions = new RequestOptions({
         headers: new Headers({
             'Content-Type': 'application/json',

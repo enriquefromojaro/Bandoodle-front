@@ -8,11 +8,20 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "../pages/voting-date/voting-date";
-@import "../pages/map-page/map-page";
+@import "../pages/map/map.scss";
 @import "../pages/login/login.scss";
 @import "../pages/band-page/band-page.scss";
 @import "../pages/event-list/event-list.scss";
 
 ion-tabs ion-navbar-section ion-navbar .back-button {
     display: inline-block;
+}
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.sebm-google-map-container {
+  min-height: 300px;
 }
