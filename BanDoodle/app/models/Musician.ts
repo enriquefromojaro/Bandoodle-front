@@ -1,4 +1,5 @@
 import {Band} from "./Band";
+import {BACKEND_ROOT} from '../config';
 export class Musician {
     public avatar: string;
     private _id: number;
@@ -17,7 +18,7 @@ export class Musician {
         this.bands = data.bands;
         this.avatar = data.avatar;
         if(!this.avatar.startsWith('http')){
-          this.avatar = 'http://localhost:8000'+this.avatar;
+          this.avatar = BACKEND_ROOT + this.avatar;
         }
     }
 
