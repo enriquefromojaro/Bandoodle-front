@@ -4,8 +4,8 @@ import {Musician} from '../models/Musician';
 import {BACKEND_ROOT} from '../config';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
-export class BandService {
-    private base_url = `${BACKEND_ROOT}/api/bands/`;
+export class EventService {
+    private base_url = `${BACKEND_ROOT}/api/events/`;
     private _common_headers: RequestOptions = new RequestOptions({
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -15,21 +15,21 @@ export class BandService {
     constructor(private http: Http) {
     }
 
-    public getAllBands(): Promise<any[]> {
+    public getAllEvents(): Promise<any[]> {
         return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
     }
 
-    public getband(id: number): Promise<any> {
-        return this.http.get(this.base_url + id.toString() + '/', this._common_headers).toPromise().then(
-            user => {
-                return user.json();
+    public getEvent(id: number): Promise<any> {
+        return this.http.get(this.base_url + id + '/', this._common_headers).toPromise().then(
+            data => {
+                return data.json();
             }
         ).catch(this.handleError);
     }
 
-    private extractData(res: Response): Musician[] {
-        let bands = res.json();
-        return bands;
+    private extractData(res: Response): Event[] {
+        let res_obj = res.json();
+        return res_obj;
     }
 
     private handleError(error: any) {

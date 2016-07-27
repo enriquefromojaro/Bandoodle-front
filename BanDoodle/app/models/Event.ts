@@ -1,12 +1,13 @@
 import {TimeOption} from "./TimeOptions";
 export class Event {
+    public description: string;
     private _id: number;
     public name: string;
     public type: string;
     public direction: string;
     public time_options: TimeOption[];
 
-    constructor(name: string, type: string, direction: string, time_options: TimeOption[] | any[], id?: number) {
+    constructor(name: string, type: string, direction: string, time_options: TimeOption[] | any[], id?: number, description?:string) {
         if (id) {
             this._id = id;
         }
@@ -25,5 +26,11 @@ export class Event {
                     this.time_options.push(new TimeOption(elem.start_time, elem.end_time, elem.date, elem.voted_by));
             }
         }
+
+        this.description = description || '';
+    }
+
+    public get id(){
+      return this.id;
     }
 }

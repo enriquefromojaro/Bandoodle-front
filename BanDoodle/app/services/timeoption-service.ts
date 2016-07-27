@@ -1,11 +1,13 @@
+import {Subscription} from "../../node_modules/rxjs/Subscription";
 import {Injectable} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Musician} from '../models/Musician';
 import {BACKEND_ROOT} from '../config';
 import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
 @Injectable()
-export class BandService {
-    private base_url = `${BACKEND_ROOT}/api/bands/`;
+export class TimeOptionService {
+    private base_url = `${BACKEND_ROOT}/api/timeoptions/`;
     private _common_headers: RequestOptions = new RequestOptions({
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -15,16 +17,17 @@ export class BandService {
     constructor(private http: Http) {
     }
 
-    public getAllBands(): Promise<any[]> {
-        return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
-    }
 
-    public getband(id: number): Promise<any> {
-        return this.http.get(this.base_url + id.toString() + '/', this._common_headers).toPromise().then(
-            user => {
-                return user.json();
+    public getTimeOption(id: number): Promise<any> {
+        return this.http.get(this.base_url + id + '/', this._common_headers).toPromise().then(
+            data => {
+                return data.json();
             }
         ).catch(this.handleError);
+    }
+
+    public toogleVote(id: number) {
+        return this.http.get(this.base_url + id + '/toggle_vote/', this._common_headers).toPromise().then(data => data.json()).catch(this.handleError);
     }
 
     private extractData(res: Response): Musician[] {
@@ -38,7 +41,7 @@ export class BandService {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
-        return Promise.reject(errMsg);
+        return Observable.throw(errMsg);
     }
     public setAuthToken(token: string) {
         this._common_headers.headers.set('Authorization', 'Token ' + token);

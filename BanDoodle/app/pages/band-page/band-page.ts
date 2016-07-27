@@ -1,3 +1,4 @@
+import {EventPage} from "../event-page/event-page";
 import {UserListModal} from "../../components/user-list-modal/user-list-modal";
 import {Modal} from "ionic-angular/components/modal/modal";
 import {Alert} from "ionic-angular/components/alert/alert";
@@ -8,12 +9,6 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
 import {EventListPage} from '../event-list/event-list';
 
-/*
-  Generated class for the BandPagePage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
     templateUrl: 'build/pages/band-page/band-page.html',
     providers: [GlobalVarsService, BandService],
@@ -51,11 +46,6 @@ export class BandPage {
         this.nav.push(EventListPage, {events:this.band.events});
     }
     public nav_to_event(event: any) {
-        let alert = Alert.create({
-            title: 'Por implementar',
-            subTitle: 'Este apartado no ha sido desarrollado todavía',
-            buttons: ['OK']
-        });
-        this.nav.present(alert);
+        this.nav.push(EventPage,{eventId:event.id})
     }
 }
