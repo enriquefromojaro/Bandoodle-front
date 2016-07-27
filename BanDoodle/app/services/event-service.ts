@@ -27,9 +27,9 @@ export class EventService {
         ).catch(this.handleError);
     }
 
-    private extractData(res: Response): Musician[] {
-        let bands = res.json();
-        return bands;
+    private extractData(res: Response): Event[] {
+        let res_obj = res.json();
+        return res_obj;
     }
 
     private handleError(error: any) {

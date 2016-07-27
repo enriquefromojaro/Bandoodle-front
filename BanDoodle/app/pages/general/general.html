@@ -2,5 +2,28 @@
     <ion-title>{{(event| async)?.name}}</ion-title>
 </ion-navbar>
 <ion-content padding class="general">
+    <ion-grid class="event-info-header">
+        <ion-row>
+            <ion-col class="event-name">{{(event| async)?.name}}</ion-col>
+            <ion-col class="event-type">{{(event| async)?.type}}</ion-col>
+        </ion-row>
 
+    </ion-grid>
+    <ion-card>
+        <ion-card-header>
+            Descripción
+        </ion-card-header>
+        <ion-card-content>
+            {{(event| async)?.description}}
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            Dirección
+        </ion-card-header>
+        <ion-card-content>
+            {{(event| async)?.direction}}
+        </ion-card-content>
+    </ion-card>
 </ion-content>

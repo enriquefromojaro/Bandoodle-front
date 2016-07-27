@@ -1,3 +1,28 @@
+.event-name {
+    word-wrap: break-word;
+    width: 75%;
+    min-width: 75%;
+    padding: 0;
+    margin: 0;
+}
+.event-type {
+    width: 24%;
+    min-width: 24%;
+    margin-left: 1%;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    font-size: 150%;
+    background-color: black;
+    color: white;
+}
 .general {
-
+    width: 100%;
+}
+.event-info-header {
+    width: 90%;
+    display: inline-flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
 }

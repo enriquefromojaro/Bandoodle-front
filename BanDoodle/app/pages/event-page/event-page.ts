@@ -41,7 +41,7 @@ export class EventPage {
         }
         this._event_service.getEvent(id).then(
             (data) => {
-                this.event = new Event(data.name, data.type, data.direction, data.time_options, data.id);
+                this.event = new Event(data.name, data.type, data.direction, data.time_options, data.id, data.description);
                 loading.dismiss();
                 this.params['event'].next(this.event);
                 this.params['event']= this.event;
