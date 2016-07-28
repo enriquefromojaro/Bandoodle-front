@@ -1,5 +1,6 @@
 import {Musician} from "./Musician";
 import {Event} from './Event';
+import {BACKEND_ROOT} from '../config';
 export class Band {
   public avatar: string;
   private _id: number;
@@ -15,6 +16,9 @@ export class Band {
       this.users = data.users;
       this.events = data.events;
       this.avatar = data.avatar;
+      if(!this.avatar.startsWith('http')){
+        this.avatar = BACKEND_ROOT + this.avatar;
+      }
   }
 
   public get id(): number {

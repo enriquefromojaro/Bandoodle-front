@@ -16,6 +16,9 @@
                 Grupos
             </ion-list-header>
             <button ion-item *ngFor='let g of groups' (click)='openBandPage(g)'>
+                <ion-avatar>
+                    <img src="{{g.avatar}}" />
+                </ion-avatar>
                 {{g.name}}
             </button>
         </ion-list>
