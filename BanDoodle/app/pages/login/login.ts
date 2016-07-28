@@ -5,13 +5,8 @@ import {MusicianService} from '../../services/musician-service';
 import {GlobalVarsService} from '../../services/global-vars-service';
 import {WelcomePage} from '../welcome-page/welcome-page';
 import {MyApp} from '../../app';
+import {RegisterPage} from '../register/register';
 
-/*
-  Generated class for the LoginPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Page({
     templateUrl: 'build/pages/login/login.html',
     providers: [MusicianService, GlobalVarsService]
@@ -61,4 +56,7 @@ export class LoginPage {
         this.global_vars = GlobalVarsService.getInstance();
     }
 
+    register(){
+      this.nav.push(RegisterPage);
+    }
 }

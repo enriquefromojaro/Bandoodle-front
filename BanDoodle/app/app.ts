@@ -41,15 +41,28 @@ export class MyApp {
         this.platform = platform;
         this.musician_service = musician_service;
         this.global_vars_service = GlobalVarsService.getInstance();
+        var user = parseInt(localStorage.getItem('user'));
+        var authtoken = localStorage.getItem('authtoken');
+
+        if (user && authtoken) {
+            var self = this;
+            this.musician_service.setAuthToken(authtoken);
+            this.musician_service.getMusician(user)
+                .then(user => {
+                    self.rootPage = WelcomePage;
+                    self.global_vars_service.setVar('user', user);
+                    self.global_vars_service.addVar('authtoken', authtoken);
+                });
+        }
     }
 
     ininitializeApp() {
-      var self = this;
+        var self = this;
         this.platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             StatusBar.styleDefault();
-            let map = new GoogleMap('google_maps');
+          //  this.registerBackButtonListener();
         });
     }
 
@@ -65,19 +78,7 @@ export class MyApp {
 
 
     ngOnInit() {
-        var user = parseInt(localStorage.getItem('user'));
-        var authtoken = localStorage.getItem('authtoken');
 
-        if (user && authtoken) {
-            var self = this;
-            this.musician_service.setAuthToken(authtoken);
-            this.musician_service.getMusician(user)
-                .then(user => {
-                    self.rootPage = WelcomePage;
-                    self.global_vars_service.setVar('user', user);
-                    self.global_vars_service.addVar('authtoken', authtoken);
-                });
-        }
         this.global_vars_service.addVar('user', null);
         this.global_vars_service.getObservableVar('user').subscribe(value => {
             if (!value)
@@ -86,5 +87,46 @@ export class MyApp {
                 this.groups = value.bands;
             }
         });
+    }
+
+    registerBackButtonListener() {
+        var nav = this.nav;
+        document.addEventListener('backbutton', () => {
+
+            let alert = Alert.create({
+                title: 'Error!!',
+                subTitle: 'backbutton event',
+                buttons: ['OK']
+            });
+            nav.present(alert);
+            if (nav.canGoBack()) {
+                nav.pop();
+            }
+            else {
+                this.confirmExitApp(nav);
+            }
+        });
+    }
+
+    confirmExitApp(nav) {
+        let confirm = Alert.create({
+            title: 'Confirm Exit',
+            message: 'Really exit app?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: () => {
+                        console.log('Disagree clicked');
+                    }
+                },
+                {
+                    text: 'Exit',
+                    handler: () => {
+
+                    }
+                }
+            ]
+        });
+        nav.present(confirm);
     }
 }
