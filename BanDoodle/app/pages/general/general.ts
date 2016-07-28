@@ -9,8 +9,10 @@ import {Event} from '../../models/Event';
 })
 export class GeneralPage {
     event: Observable<Event> |Event;
+    observable_event : boolean;
     constructor(public nav: NavController, private _navParams: NavParams) {
         var event = this._navParams.get('event');
+        this.observable_event = event instanceof Subject;
         if(event instanceof Subject){
           this.event = event.asObservable();
         }
