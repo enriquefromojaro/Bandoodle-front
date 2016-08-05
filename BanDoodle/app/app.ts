@@ -54,15 +54,22 @@ export class MyApp {
                     self.global_vars_service.addVar('authtoken', authtoken);
                 });
         }
+        this.initializeApp();
     }
 
-    ininitializeApp() {
+    initializeApp() {
         var self = this;
         this.platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             StatusBar.styleDefault();
-          //  this.registerBackButtonListener();
+            // this.platform.backButton.subscribe(() => {
+            //     e.preventDefault();
+            //     console.log('AAAAAAAAAAAAAAAAAAAAAa: ' + self.nav.canGoBack());
+            //     return self.nav.pop();
+            // });
+
+            this.registerBackButtonListener();
         });
     }
 
@@ -90,22 +97,29 @@ export class MyApp {
     }
 
     registerBackButtonListener() {
-        var nav = this.nav;
-        document.addEventListener('backbutton', () => {
+        this.platform.backButton.observers = [];
+        this.platform.backButton.subscribe(() => {
+            this.menu.close();
 
-            let alert = Alert.create({
-                title: 'Error!!',
-                subTitle: 'backbutton event',
-                buttons: ['OK']
-            });
-            nav.present(alert);
-            if (nav.canGoBack()) {
-                nav.pop();
+            if (this.nav.canGoBack()) {
+                this.nav.pop();
+
+                return;
             }
-            else {
-                this.confirmExitApp(nav);
+
+            let activePage = this.nav.getActive().instance;
+
+            let rootPages = [WelcomePage, LoginPage, BandPage];
+
+            // if current page is not in whitelistPage
+            // then back to DashboardPage first
+            if (rootPages.indexOf(activePage.constructor) < 0) {
+                this.nav.setRoot(LoginPage);
             }
-        });
+            else{
+              this.platform.exitApp();
+            }
+        }, error => alert(error))
     }
 
     confirmExitApp(nav) {
