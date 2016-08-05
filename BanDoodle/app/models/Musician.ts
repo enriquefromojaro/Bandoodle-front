@@ -7,7 +7,7 @@ export class Musician {
     public first_name: string;
     public last_name: string;
     public email: string;
-    public bands: Band[] | number[];
+    public bands: Array<Band | number>;
 
     public constructor(data: any) {
         if (data.id)
@@ -15,7 +15,7 @@ export class Musician {
         this.username = data.username;
         this.first_name = data.first_name;
         this.email = data.email;
-        this.bands = data.bands;
+        this.bands = data.bands.map((band)=>new Band(band));
         this.avatar = data.avatar;
         if(!this.avatar.startsWith('http')){
           this.avatar = BACKEND_ROOT + this.avatar;
