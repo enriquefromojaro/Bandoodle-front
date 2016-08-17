@@ -2,11 +2,9 @@ import {Observable} from "rxjs/Observable";
 import {NavParams} from "ionic-angular/components/nav/nav-params";
 import {Page, NavController} from 'ionic-angular';
 import {Event} from '../../models/Event';
-// import { ANGULAR2_GOOGLE_MAPS_DIRECTIVES } from 'angular2-google-maps/directives';
 
 @Page({
     templateUrl: 'build/pages/map/map.html',
-    // directives: [ANGULAR2_GOOGLE_MAPS_DIRECTIVES]
 })
 export class MapPage {
     event: Event;

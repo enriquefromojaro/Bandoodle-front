@@ -1,3 +1,4 @@
+import {Observable} from "../../node_modules/rxjs/Observable";
 import {Injectable} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Musician} from '../models/Musician';
@@ -47,6 +48,34 @@ export class MusicianService {
                 return { user: mus, token: token };
             })
             .catch(this.handleError);
+    }
+
+    public registerUser(user: Musician, avatarFile: File, password:string): Observable<any> {
+        return Observable.create(observer => {
+            let formData: FormData = new FormData();
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            formData.append("username", user.username);
+            formData.append("email", user.email);
+            formData.append("first_name", user.first_name);
+            formData.append("last_name", user.last_name);
+            formData.append("password", password);
+            formData.append("avatar", avatarFile);
+            console.log(formData);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            };
+
+
+            xhr.open('POST', this.base_url, true);
+            xhr.send(formData);
+        });
     }
 
     private handleError(error: any) {

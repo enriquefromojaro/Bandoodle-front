@@ -14,14 +14,30 @@ import { ImagePicker } from 'ionic-native';
 })
 export class RegisterPage {
     user: Musician;
-    constructor(public nav: NavController) {
+    avatar:File;
+    password:string;
+    constructor(public nav: NavController, private musician_service: MusicianService) {
         this.user = new Musician();
     }
 
     public select_avatar() {
         ImagePicker.getPictures({}).then(
-            (results) => (this.user.avatar=results[0]),
+            (results) => (this.user.avatar = results[0]),
             (err) => console.log('Imagen ERR: ', err)
         ).catch((err?) => console.error('Imagen ERROR: ', err));
+    }
+
+    onChange(event) {
+        console.log('onChange');
+        var file:File = event.srcElement.files[0];
+        this.user.avatar=file.name;
+        this.avatar = file;
+    }
+
+    submit(){
+      this.musician_service.registerUser(this.user, this.avatar, this.password).subscribe(
+        data=>console.log('DATA:',data),
+        (err?)=>console.error('ERROR:', err)
+      );
     }
 }

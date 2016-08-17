@@ -7,12 +7,12 @@
 
         <ion-item>
             <ion-label floating>Username</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]='user.username'></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input type="password" [(ngModel)]='password'></ion-input>
         </ion-item>
 
         <ion-item>
@@ -22,28 +22,27 @@
 
         <ion-item>
             <ion-label floating>Nombre</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]='user.first_name'></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Apellidos</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]='user.last_name'></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label floating>email</ion-label>
-          <ion-input type="email"></ion-input>
+          <ion-input type="email" [(ngModel)]='user.email'></ion-input>
         </ion-item>
         <div showWhen="core">
           <label for="avatar_input">Avatar</label>
-          <input type="file" accept="image/*" name="avatar_input"/>
+          <input type="file" accept="image/*" name="avatar_input" (change)="onChange($event)"/>
         </div>
-        <div showWhen="ios,android">
+        <div showWhen="ios,android,windows">
           <button (click)='select_avatar()' >Seleccionar avatar</button>
-          <ion-avatar>
-            <img ngSrc="user.avatar"/>
-          </ion-avatar>
         </div>
+        <button (click)='submit()'>Submit</button>
+        {{user.avatar}}
 
 
     </ion-list>
