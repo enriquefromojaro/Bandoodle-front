@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Musician} from '../models/Musician';
 import {BACKEND_ROOT} from '../config';
+import {Event} from '../models/Event';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class EventService {
@@ -19,11 +20,9 @@ export class EventService {
         return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
     }
 
-    public getEvent(id: number): Promise<any> {
+    public getEvent(id: number): Promise<Event> {
         return this.http.get(this.base_url + id + '/', this._common_headers).toPromise().then(
-            data => {
-                return data.json();
-            }
+            data => data.json()
         ).catch(this.handleError);
     }
 

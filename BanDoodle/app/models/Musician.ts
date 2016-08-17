@@ -9,16 +9,23 @@ export class Musician {
     public email: string;
     public bands: Array<Band | number>;
 
-    public constructor(data: any) {
-        if (data.id)
-            this._id = data.id;
-        this.username = data.username;
-        this.first_name = data.first_name;
-        this.email = data.email;
-        this.bands = data.bands.map((band)=>new Band(band));
-        this.avatar = data.avatar;
-        if(!this.avatar.startsWith('http')){
-          this.avatar = BACKEND_ROOT + this.avatar;
+    public constructor(data?: any) {
+        if (data) {
+            if (data.id)
+                this._id = data.id;
+            this.username = data.username;
+            this.first_name = data.first_name;
+            this.email = data.email;
+
+            if (data.bands)
+                this.bands = data.bands.map((band) => new Band(band));
+            else
+                this.bands = [];
+                
+            this.avatar = data.avatar;
+            if (!this.avatar.startsWith('http')) {
+                this.avatar = BACKEND_ROOT + this.avatar;
+            }
         }
     }
 

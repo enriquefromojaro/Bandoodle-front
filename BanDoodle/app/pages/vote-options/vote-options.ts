@@ -18,7 +18,7 @@ export class VoteOptionsPage {
     private _event_service: EventService;
     constructor(public nav: NavController, private _navParams: NavParams) {
         this.event = this._navParams.get('event');
-        this.dates = []
+        this.dates = [];
         this._event_service = this._navParams.get('event_service');
         this.event.time_options = this.event.time_options.sort((a: TimeOption, b: TimeOption) => a.date.getTime() - b.date.getTime());
         var max_date = null;

@@ -34,11 +34,17 @@
           <ion-label floating>email</ion-label>
           <ion-input type="email"></ion-input>
         </ion-item>
+        <div showWhen="core">
+          <label for="avatar_input">Avatar</label>
+          <input type="file" accept="image/*" name="avatar_input"/>
+        </div>
+        <div showWhen="ios,android">
+          <button (click)='select_avatar()' >Seleccionar avatar</button>
+          <ion-avatar>
+            <img ngSrc="user.avatar"/>
+          </ion-avatar>
+        </div>
 
-        <ion-item>
-          <ion-label floating>avatar</ion-label>
-          <ion-input type="file" accept="image/*"></ion-input>
-        </ion-item>
 
     </ion-list>
 </ion-content>
