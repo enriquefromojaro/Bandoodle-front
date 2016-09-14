@@ -1,8 +1,8 @@
 var gulp = require('gulp'),
-    gulpWatch = require('gulp-watch'),
-    del = require('del'),
-    runSequence = require('run-sequence'),
-    argv = process.argv;
+  gulpWatch = require('gulp-watch'),
+  del = require('del'),
+  runSequence = require('run-sequence'),
+  argv = process.argv;
 
 
 /**
@@ -10,7 +10,7 @@ var gulp = require('gulp'),
  * Add ':before' or ':after' to any Ionic project command name to run the specified
  * tasks before or after the command.
  */
-gulp.task('serve:before', ['watch']);
+gulp.task('serve:before', [ 'watch']);
 gulp.task('emulate:before', ['build']);
 gulp.task('deploy:before', ['build']);
 gulp.task('build:before', ['build']);
@@ -32,27 +32,38 @@ var buildSass = require('ionic-gulp-sass-build');
 var copyHTML = require('ionic-gulp-html-copy');
 var copyFonts = require('ionic-gulp-fonts-copy');
 var copyScripts = require('ionic-gulp-scripts-copy');
+var tslint = require('ionic-gulp-tslint');
 
 var isRelease = argv.indexOf('--release') > -1;
 
-gulp.task('watch', ['clean'], function(done){
+gulp.task('watch', ['clean'], function(done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
-      gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
-      gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
-      buildBrowserify({ watch: true }).on('end', done);
+    function() {
+      gulpWatch('app/**/*.scss', function() {
+        gulp.start('sass');
+      });
+      gulpWatch('app/**/*.html', function() {
+        gulp.start('html');
+      });
+      buildBrowserify({
+        watch: true
+      }).on('end', done);
     }
   );
 });
 
-gulp.task('build', ['clean'], function(done){
+gulp.task('build', ['clean'], function(done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
+    function() {
       buildBrowserify({
+        minify: isRelease,
         browserifyOptions: {
           debug: !isRelease
+        },
+        uglifyOptions: {
+          mangle: false
         }
       }).on('end', done);
     }
@@ -63,6 +74,27 @@ gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
 gulp.task('fonts', copyFonts);
 gulp.task('scripts', copyScripts);
-gulp.task('clean', function(){
-  return del('www/build');
+gulp.task('clean', function() {
+  //return del('www/build');
+});
+gulp.task('lint', tslint);
+// ------------------------------------------------------------------------ Pugins overwrite for browser!!! -----------------------------------
+gulp.task('plugin-overwrite', function() {
+
+  // Step 1: Move the edited files back into the plugin folder
+  gulp.src('./www/plugin/file.js')
+    .pipe(gulp.dest('./plugins/com.plugin/src/browser/'));
+
+  // Step 2: Build the project
+  // if (sh.exec('ionic build browser').code !== 0) {
+  //   console.log('Failed to build for browser');
+  //   process.exit(1);
+  // }
+
+  // Step 3: Move built files back into webroot
+  gulp.src(['./platforms/browser/www/cordova.js', './platforms/browser/www/cordova_plugins.js'])
+    .pipe(gulp.dest('./www/build/'));
+
+  gulp.src('./platforms/browser/www/plugins')
+    .pipe(gulp.dest('./www/build/'));
 });

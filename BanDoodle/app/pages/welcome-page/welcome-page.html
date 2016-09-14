@@ -4,8 +4,7 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<nav-bar-menu [title]='"Welcome!!!"'></nav-bar-menu>
-
+<navbar-menu [title]='"Welcome!!!"'[menuMode]='true'></navbar-menu>
 <ion-content padding class="welcome-page">
   <h2>
     Welcome to Bandoodle!!!
@@ -13,4 +12,5 @@
   <p>
     We hope it will solve some of your needs as a band member
   </p>
+  <img src='{{user?.avatar}}'/>
 </ion-content>

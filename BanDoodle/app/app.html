@@ -3,6 +3,9 @@
         <ion-title> Menu </ion-title>
     </ion-toolbar>
     <ion-content>
+        <!-- <ion-avatar>
+            <img src='{{user?.avatar}}'/>
+        </ion-avatar> -->
         <ion-list>
             <ion-list-header>
                 Páginas
@@ -15,8 +18,15 @@
             <ion-list-header>
                 Grupos
             </ion-list-header>
-            <button ion-item *ngFor='let g of groups' (click)='openBandPage(g)'>
+            <button ion-item *ngFor='let g of groups' (tap)='openBandPage(g)'>
+                <ion-avatar>
+                    <img src="{{g.avatar}}" />
+                </ion-avatar>
                 {{g.name}}
+            </button>
+            <button ion-item (tap)='createBand()'>
+              <ion-icon name="ios-add-circle-outline"></ion-icon>
+              <span> Nueva banda </span>
             </button>
         </ion-list>
 

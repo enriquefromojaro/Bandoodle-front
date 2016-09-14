@@ -1,0 +1,13 @@
+<!--
+  Generated template for the FileSelector component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<div showWhen="core">
+  <label for="avatar_input">Avatar</label>
+  <input type="file" accept="image/*" name="avatar_input" (change)="onFileChange($event)"/>
+</div>
+<div showWhen="ios,android,windows">
+  <button (click)='selectImage()' >Seleccionar avatar</button>
+</div>

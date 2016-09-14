@@ -19,7 +19,7 @@ var NavBarMenuComponent = (function () {
     NavBarMenuComponent = __decorate([
         core_1.Component({
             templateUrl: 'build/components/navBarMenu/navBarMenu.html',
-            selector: 'nav-bar-menu',
+            selector: 'navbar-menu',
             styleUrls: [
                 'build/css/app.md.css'
             ]

@@ -1,18 +1,21 @@
 import {EventService} from "../../services/event-service";
 import {GlobalVarsService} from "../../services/global-vars-service";
-import {Loading} from "ionic-angular/components/loading/loading";
 import {NavParams} from "ionic-angular/components/nav/nav-params";
-import {NavController, Page} from 'ionic-angular';
+import {NavController, Page, LoadingController} from 'ionic-angular';
 import {VoteOptionsPage} from '../vote-options/vote-options';
 import {GeneralPage} from '../general/general';
 import {MapPage} from '../map/map';
 import {Event} from '../../models/Event';
 import {Subject} from 'rxjs/Subject';
+import {Component} from '@angular/core';
+import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
 
 
-@Page({
+
+@Component({
     templateUrl: 'build/pages/event-page/event-page.html',
-    providers:[GlobalVarsService,EventService]
+    providers:[GlobalVarsService,EventService],
+    directives: [NavBarMenuComponent]
 })
 export class EventPage {
     tab1Root: any;
@@ -22,7 +25,7 @@ export class EventPage {
     event:Event;
     params:{[key:string]:any}
 
-    constructor(public nav: NavController, private _navParams:NavParams, public _event_service:EventService) {
+    constructor(public nav: NavController, private _navParams:NavParams, public _event_service:EventService, private loadingCtrl:LoadingController) {
         // set the root pages for each tab
         this.tab1Root = VoteOptionsPage;
         this.tab2Root = GeneralPage;
@@ -30,11 +33,11 @@ export class EventPage {
 
         this._global_vars = GlobalVarsService.getInstance();
         var id = this._navParams.get('eventId');
-        let loading = Loading.create({
+        let loading = this.loadingCtrl.create({
             content: "Loading...",
         });
         this._event_service.setAuthToken(this._global_vars.getVar('authtoken'));
-        this.nav.present(loading);
+        loading.present()
         this.params = {
           event:new Subject<any>(),
           event_service:this._event_service

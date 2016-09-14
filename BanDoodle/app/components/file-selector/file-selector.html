@@ -1,0 +1,13 @@
+<div showWhen="core">
+  <label for="avatar_input">Avatar</label>
+  <input type="file" accept="image/*" name="avatar_input" (change)="onFileChange($event)"/>
+</div>
+<div showWhen="ios,android,windows">
+  <button (click)='selectImage()'>Seleccionar avatar</button>
+  <ion-item>
+      <span>Viesta previa</span>
+      <ion-avatar>
+          <img src='{{uri}}' >
+      </ion-avatar>
+  </ion-item>
+</div>

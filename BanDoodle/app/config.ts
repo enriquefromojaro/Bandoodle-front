@@ -1,1 +1,1 @@
-export const BACKEND_ROOT :string = 'http://190.160.0.107:8000';
+export const BACKEND_ROOT :string = 'http://192.168.1.39:8000';
