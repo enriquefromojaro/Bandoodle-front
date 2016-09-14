@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Miembros
+        </ion-title>
+        <ion-buttons start>
+            <button (click)="close()">
+                <span primary showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form name='bandCreationName'>
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Genero</ion-label>
+      <ion-select>
+        <ion-option>Rock</ion-option>
+        <ion-option>Rock & Roll</ion-option>
+        <ion-option>Metal</ion-option>
+        <ion-option>Heavy Metal</ion-option>
+        <ion-option>Deathtukada</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <file-selector></file-selector>
+    </ion-item>
+    <button>Crear</button>
+
+  </form>
+</ion-content>

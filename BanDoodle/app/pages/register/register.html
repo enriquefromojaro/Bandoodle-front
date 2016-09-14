@@ -1,6 +1,9 @@
-<ion-navbar *navbar>
-    <ion-title>Registrate</ion-title>
-</ion-navbar>
+<ion-header>
+    <ion-navbar>
+        <ion-title>Regístrate</ion-title>
+    </ion-navbar>
+</ion-header>
+
 
 <ion-content padding class="register">
     <ion-list>
@@ -34,16 +37,9 @@
           <ion-label floating>email</ion-label>
           <ion-input type="email" [(ngModel)]='user.email'></ion-input>
         </ion-item>
-        <div showWhen="core">
-          <label for="avatar_input">Avatar</label>
-          <input type="file" accept="image/*" name="avatar_input" (change)="onChange($event)"/>
-        </div>
-        <div showWhen="ios,android,windows">
-          <button (click)='select_avatar()' >Seleccionar avatar</button>
-        </div>
+        <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
+        ,{{avatar.name}}, {{avatar.latModifiedDate}},
         <button (click)='submit()'>Submit</button>
-        {{user.avatar}}
-
 
     </ion-list>
 </ion-content>

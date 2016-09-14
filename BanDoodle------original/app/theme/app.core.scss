@@ -1,0 +1,25 @@
+// http://ionicframework.com/docs/v2/theming/
+// App Shared Imports
+// --------------------------------------------------
+// These are the imports which make up the design of this app.
+// By default each design mode includes these shared imports.
+// App Shared Sass variables belong in app.variables.scss.
+@import "../pages/map/map.scss";
+@import "../pages/login/login.scss";
+@import "../pages/band-page/band-page.scss";
+@import "../pages/event-list/event-list.scss";
+@import "../pages/general/general.scss";
+@import "../pages/map/map.scss";
+@import "../pages/event-page/event-page.scss";
+@import "../pages/vote-options/vote-options.scss";
+@import "../pages/register/register.scss";
+ion-tabs ion-navbar-section ion-navbar .back-button {
+    display: inline-block;
+}
+#map_canvas {
+    width: 100%;
+    height: 100%;
+}
+.sebm-google-map-container {
+    min-height: 300px;
+}

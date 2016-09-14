@@ -1,0 +1,39 @@
+<ion-navbar *navbar>
+    <ion-title>
+      <span *ngIf="observable_event"> {{(event | async)?.name}}</span>
+      <span *ngIf="!observable_event"> {{event?.name}}</span>
+    </ion-title>
+</ion-navbar>
+<ion-content padding class="general">
+    <ion-grid class="event-info-header">
+        <ion-row>
+            <ion-col class="event-name">
+              <span *ngIf="observable_event"> {{(event | async)?.name}}</span>
+              <span *ngIf="!observable_event"> {{event?.name}}</span>
+              </ion-col>
+            <ion-col class="event-type">
+                <span *ngIf="observable_event"> {{(event | async)?.type}}</span>
+                <span *ngIf="!observable_event"> {{event?.type}}</span></ion-col>
+        </ion-row>
+
+    </ion-grid>
+    <ion-card>
+        <ion-card-header>
+            Descripción
+        </ion-card-header>
+        <ion-card-content>
+            <span *ngIf="observable_event"> {{(event | async)?.description}}</span>
+            <span *ngIf="!observable_event"> {{event?.description}}</span>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            Dirección
+        </ion-card-header>
+        <ion-card-content>
+            <span *ngIf="observable_event"> {{(event | async)?.direction}}</span>
+            <span *ngIf="!observable_event"> {{event?.direction}}</span>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

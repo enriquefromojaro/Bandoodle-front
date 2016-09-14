@@ -5,9 +5,10 @@ import {Page, NavController} from 'ionic-angular';
 import {Event} from '../../models/Event';
 import {AtDatePipe} from '../../pipes/AtDate';
 import {DespDateVotingComponent} from '../../components/desplegable-date-voting/desplegable-date-voting';
+import {Component} from '@angular/core';
 
 
-@Page({
+@Component({
     templateUrl: 'build/pages/vote-options/vote-options.html',
     pipes: [AtDatePipe],
     directives: [DespDateVotingComponent]

@@ -1,13 +1,13 @@
-import {Loading} from "../../../node_modules/ionic-angular/components/loading/loading";
-import {Alert} from "../../../node_modules/ionic-angular/components/alert/alert";
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, LoadingController, AlertController} from 'ionic-angular';
 import {MusicianService} from '../../services/musician-service';
 import {GlobalVarsService} from '../../services/global-vars-service';
 import {WelcomePage} from '../welcome-page/welcome-page';
 import {MyApp} from '../../app';
 import {RegisterPage} from '../register/register';
+import {Component} from '@angular/core';
 
-@Page({
+
+@Component({
     templateUrl: 'build/pages/login/login.html',
     providers: [MusicianService, GlobalVarsService]
 })
@@ -18,10 +18,10 @@ export class LoginPage {
     private global_vars;
     login() {
         var self = this;
-        let loading = Loading.create({
+        let loading = this.loadingCtrl.create({
             content: "Loging in...",
         });
-        this.nav.present(loading);
+        loading.present();
         this.musician_service.login(this.username, this.password)
             .then(function(data) {
                 self.global_vars.setVar('user', data.user);
@@ -35,25 +35,26 @@ export class LoginPage {
             },
             (error?) => {
                 loading.dismiss();
-                let alert = Alert.create({
+                let alert = this.alertCtrl.create({
                     title: 'Error!!',
                     subTitle: error.message || error,
                     buttons: ['OK']
                 });
-                this.nav.present(alert);
+                alert.present();
             })
             .catch(err => {
                 loading.dismiss();
-                let alert = Alert.create({
+                let alert = this.alertCtrl.create({
                     title: 'Error!!',
                     subTitle: err.message || err,
                     buttons: ['OK']
                 });
-                this.nav.present(alert);
+                alert.present();
             });
     }
-    constructor(public nav: NavController, private musician_service: MusicianService) {
+    constructor(public nav: NavController, private musician_service: MusicianService, private alertCtrl:AlertController, private loadingCtrl:LoadingController) {
         this.global_vars = GlobalVarsService.getInstance();
+        console.log(new File(['paata'], 'patata.png'));
     }
 
     register(){
