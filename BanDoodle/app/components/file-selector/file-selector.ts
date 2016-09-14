@@ -88,7 +88,7 @@ export class FileSelector {
 
                     }
                 Camera.getPicture(options).then(data => {
-                    console.log("data:image/jpeg;base64," + data);
+                    this.uri = "data:image/jpeg;base64," + data;
                     this.file = new File([this.loadFile(data)], 'avatar.jpg', {
                         type : 'image/jpeg'
                     });
@@ -102,12 +102,8 @@ export class FileSelector {
         return dataURItoBlob(uri, 'image/jpeg');
     }
 
-
-
     onFileChange(event) {
-        console.log('onChange');
         this.file = event.srcElement.files[0];
-        console.log(this.file);
         this.fileChangeEmitter.next(this.file);
     }
 }

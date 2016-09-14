@@ -38,7 +38,6 @@
           <ion-input type="email" [(ngModel)]='user.email'></ion-input>
         </ion-item>
         <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
-        ,{{avatar.name}}, {{avatar.latModifiedDate}},
         <button (click)='submit()'>Submit</button>
 
     </ion-list>
