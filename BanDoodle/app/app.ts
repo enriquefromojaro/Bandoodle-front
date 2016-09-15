@@ -53,11 +53,17 @@ export class MyApp {
             this.musician_service.setAuthToken(authtoken);
             this.musician_service.getMusician(user)
                 .then(user => {
-                    self.rootPage = WelcomePage;
-                    self.global_vars_service.setVar('user', user);
-                    self.global_vars_service.addVar('authtoken', authtoken);
+                    this.rootPage = WelcomePage;
+                    this.global_vars_service.setVar('user', user);
+                    this.global_vars_service.addVar('authtoken', authtoken);
                 });
+
         }
+        this.global_vars_service.getObservableVar('user').subscribe(
+            (data)=>{
+                this.user= data;
+            }
+        );
         this.initializeApp();
     }
 
@@ -118,8 +124,7 @@ export class MyApp {
         }, error => alert(error))
     }
     createBand() {
-        this.menu.close();
-        console.log('Patata', this.modalCtrl);
+        console.log('app user: ', this.user);
         let createModal = this.modalCtrl.create(BandFormModal, { user: this.user });
         createModal.present();
     }
