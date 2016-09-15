@@ -20,10 +20,9 @@ export class RegisterPage {
         this.avatar = new File([], 'patata.png');
     }
 
-
     submit() {
         this.musician_service.registerUser(this.user, this.avatar, this.password).subscribe(
-            data => alert('DATA:' + data),
+            data => alert('Register successful!!'),
             (err?) => alert + ('ERROR:' + err)
         );
     }

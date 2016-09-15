@@ -64,7 +64,6 @@ export class MusicianService {
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 201) {
-                      alert('Registry successful')
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {

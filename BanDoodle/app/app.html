@@ -1,36 +1,36 @@
-<ion-menu [content]='content'>
-    <ion-toolbar>
-        <ion-title> Menu </ion-title>
-    </ion-toolbar>
-    <ion-content>
-        <!-- <ion-avatar>
+<ion-menu [content]='content' [type]='"overlay"'>
+  <ion-toolbar>
+    <ion-title> Menu </ion-title>
+  </ion-toolbar>
+  <ion-content>
+    <!-- <ion-avatar>
             <img src='{{user?.avatar}}'/>
         </ion-avatar> -->
-        <ion-list>
-            <ion-list-header>
-                Páginas
-            </ion-list-header>
-            <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <ion-list>
+      <ion-list-header>
+        Páginas
+      </ion-list-header>
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 {{p.name}}
             </button>
-        </ion-list>
-        <ion-list>
-            <ion-list-header>
-                Grupos
-            </ion-list-header>
-            <button ion-item *ngFor='let g of groups' (tap)='openBandPage(g)'>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        Grupos
+      </ion-list-header>
+      <button ion-item *ngFor='let g of groups' (tap)='openBandPage(g)'>
                 <ion-avatar>
                     <img src="{{g.avatar}}" />
                 </ion-avatar>
                 {{g.name}}
             </button>
-            <button ion-item (tap)='createBand()'>
+      <button ion-item (tap)='createBand()' menuClose>
               <ion-icon name="ios-add-circle-outline"></ion-icon>
               <span> Nueva banda </span>
             </button>
-        </ion-list>
+    </ion-list>
 
-    </ion-content>
+  </ion-content>
 </ion-menu>
 
-<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
+<ion-nav id="nav" [root]="rootPage" #content [swipeBackEnabled]="false"></ion-nav>

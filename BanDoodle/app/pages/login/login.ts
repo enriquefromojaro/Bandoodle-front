@@ -44,7 +44,7 @@ export class LoginPage {
             })
             .catch(err => {
                 loading.dismiss();
-                let alert = this.alertCtrl.create({
+                let alert = self.alertCtrl.create({
                     title: 'Error!!',
                     subTitle: err.message || err,
                     buttons: ['OK']
@@ -54,7 +54,6 @@ export class LoginPage {
     }
     constructor(public nav: NavController, private musician_service: MusicianService, private alertCtrl:AlertController, private loadingCtrl:LoadingController) {
         this.global_vars = GlobalVarsService.getInstance();
-        console.log(new File(['paata'], 'patata.png'));
     }
 
     register(){

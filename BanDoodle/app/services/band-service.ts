@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
-import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Musician} from '../models/Musician';
-import {BACKEND_ROOT} from '../config';
+import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Band } from '../models/Band';
+import { BACKEND_ROOT } from '../config';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class BandService {
@@ -15,21 +16,12 @@ export class BandService {
     constructor(private http: Http) {
     }
 
-    public getAllBands(): Promise<any[]> {
-        return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
-    }
-
     public getband(id: number): Promise<any> {
         return this.http.get(this.base_url + id.toString() + '/', this._common_headers).toPromise().then(
             user => {
                 return user.json();
             }
         ).catch(this.handleError);
-    }
-
-    private extractData(res: Response): Musician[] {
-        let bands = res.json();
-        return bands;
     }
 
     private handleError(error: any) {
@@ -42,6 +34,36 @@ export class BandService {
     }
     public setAuthToken(token: string) {
         this._common_headers.headers.set('Authorization', 'Token ' + token);
+    }
+
+    public createBand(band: Band, avatarFile: File): Promise<any> {
+        return Observable.create(observer => {
+            let formData: FormData = new FormData();
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+
+            formData.append("name", band.name);
+            formData.append("users", band.users);
+            formData.append("genre", band.genre);
+            formData.append("events", band.events);
+            formData.append("avatar", avatarFile);
+            console.log(formData);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 201) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        alert(xhr.response)
+                        observer.error(xhr.response);
+                    }
+                }
+            };
+
+
+            xhr.open('POST', this.base_url, true);
+            xhr.setRequestHeader('Authorization', this._common_headers.headers.get('Authorization'));
+            xhr.send(formData);
+        }).toPromise();
     }
 
 }
