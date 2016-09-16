@@ -2,13 +2,13 @@ import {EventPage} from "../event-page/event-page";
 import {UserListModal} from "../../components/user-list-modal/user-list-modal";
 import {BandService} from "../../services/band-service";
 import {GlobalVarsService} from "../../services/global-vars-service";
-import {Page, NavController, NavParams, LoadingController, ModalController} from 'ionic-angular';
-import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
-import {EventListPage} from '../event-list/event-list';
-import {Component} from '@angular/core';
+import {Page, NavController, NavParams, LoadingController, ModalController} from "ionic-angular";
+import {NavBarMenuComponent} from "../../components/navBarMenu/navBarMenu";
+import {EventListPage} from "../event-list/event-list";
+import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'build/pages/band-page/band-page.html',
+    templateUrl: "build/pages/band-page/band-page.html",
     providers: [GlobalVarsService, BandService],
     directives: [NavBarMenuComponent]
 
@@ -17,13 +17,27 @@ export class BandPage {
     private _global_vars: GlobalVarsService;
 
     private band;
+    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
 
     constructor(public nav: NavController, private navParams: NavParams, private _band_service: BandService, private loadingCtrl: LoadingController, private modalCtrl: ModalController) {
         this._global_vars = GlobalVarsService.getInstance();
-        this.band = this.navParams.get('band');
-        this._band_service.setAuthToken(this._global_vars.getVar('authtoken'));
+        this.band = this.navParams.get("band");
+        this._band_service.setAuthToken(this._global_vars.getVar("authtoken"));
+        this.options = [
+            {
+                icon: "person-add",
+                text: "Nuevo miembro",
+                value: "add_member"
+            },
+            {
+                icon: "remove-circle",
+                text: "Echar a miembro",
+                value: "remove_member"
+            },
+        ]
     }
     ngOnInit() {
+
         let loading = this.loadingCtrl.create({
             content: "Loading band info...",
         });

@@ -24,7 +24,14 @@ export class LoginPage {
         loading.present();
         this.musician_service.login(this.username, this.password)
             .then(function(data) {
-                self.global_vars.setVar('user', data.user);
+                try{
+                    self.global_vars.setVar('user', data.user);
+                }
+                catch(ReferenceError){
+                    self.global_vars.addVar('user', data.user);
+
+                }
+
                 self.global_vars.addVar('authtoken', data.token);
                 self.nav.setRoot(WelcomePage);
                 if (self.remember) {

@@ -1,17 +1,17 @@
 import {Observable} from "../../node_modules/rxjs/Observable";
-import {Injectable} from '@angular/core';
-import { Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Musician} from '../models/Musician';
-import {BACKEND_ROOT} from '../config';
-import 'rxjs/add/operator/toPromise';
+import {Injectable} from "@angular/core";
+import { Http, Response, Headers, RequestOptions} from "@angular/http";
+import {Musician} from "../models/Musician";
+import {BACKEND_ROOT} from "../config";
+import "rxjs/add/operator/toPromise";
 @Injectable()
 export class MusicianService {
     private base_url = `${BACKEND_ROOT}/api/users/`;
     private login_url = `${BACKEND_ROOT}/login/`;
     private _common_headers: RequestOptions = new RequestOptions({
         headers: new Headers({
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         })
     });
     constructor(private http: Http) {
@@ -22,7 +22,7 @@ export class MusicianService {
     }
 
     public getMusician(id: number): Promise<Musician> {
-        return this.http.get(this.base_url + id.toString() + '/', this._common_headers).toPromise().then(
+        return this.http.get(this.base_url + id.toString() + "/", this._common_headers).toPromise().then(
             user => {
                 return new Musician(user.json())
             }
@@ -74,22 +74,22 @@ export class MusicianService {
             };
 
 
-            xhr.open('POST', this.base_url, true);
+            xhr.open("POST", this.base_url, true);
             xhr.send(formData);
         });
     }
 
     private handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
+        // We"d also dig deeper into the error to get a better message
         let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+            error.status ? `${error.status} - ${error.statusText}` : "Server error";
         console.error(errMsg); // log to console instead
         return Promise.reject(errMsg);
     }
 
     public setAuthToken(token: string): void {
-        this._common_headers.headers.set('Authorization', 'Token ' + token)
+        this._common_headers.headers.set("Authorization", "Token " + token)
     }
 
 }
