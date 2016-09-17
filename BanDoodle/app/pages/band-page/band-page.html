@@ -1,4 +1,4 @@
-<navbar-menu [title]='band.name' [menuMode]='true' [options]='options'></navbar-menu>
+<navbar-menu [title]='band.name' [menuMode]='true' [options]='options' (action)="log($event)"></navbar-menu>
 
 <ion-content padding class="band-page">
   <ion-card>

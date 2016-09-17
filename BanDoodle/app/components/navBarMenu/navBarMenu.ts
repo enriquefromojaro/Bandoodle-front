@@ -1,5 +1,5 @@
-import {PopOver} from "../pop-over/pop-over";
-import {Component, Input} from "@angular/core";
+import {PopOver, Action} from "../pop-over/pop-over";
+import {Component, Input, EventEmitter, Output} from "@angular/core";
 import {App, PopoverController, AlertController, NavController} from "ionic-angular";
 
 
@@ -13,13 +13,15 @@ import {App, PopoverController, AlertController, NavController} from "ionic-angu
 export class NavBarMenuComponent{
   @Input() title:string;
   @Input()menuMode:boolean=false;
-  @Input() options: Array<{icon:string, text:string, value:string, callBack?:Function}>=[];
+  @Input() options: Array<Action>=[];
+  @Output("action") actionEmitter: EventEmitter<{value:string, cbResult?:any}>;
 
   constructor (private popoverCtrl:PopoverController){
+      this.actionEmitter = new EventEmitter<{value:string, cbResult?:any}>();
   }
 
   showPopOver(myEvent:Event){
-      let popover = this.popoverCtrl.create(PopOver, {options:this.options});
+      var popover = this.popoverCtrl.create(PopOver, {options:this.options, actionEmitter:this.actionEmitter});
       popover.present({
         ev: myEvent,
       });

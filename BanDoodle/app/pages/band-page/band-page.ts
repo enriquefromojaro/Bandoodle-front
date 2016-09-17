@@ -4,8 +4,11 @@ import {BandService} from "../../services/band-service";
 import {GlobalVarsService} from "../../services/global-vars-service";
 import {Page, NavController, NavParams, LoadingController, ModalController} from "ionic-angular";
 import {NavBarMenuComponent} from "../../components/navBarMenu/navBarMenu";
+import {Action} from "../../components/pop-over/pop-over";
 import {EventListPage} from "../event-list/event-list";
 import {Component} from "@angular/core";
+
+import {Band} from "../../models/Band";
 
 @Component({
     templateUrl: "build/pages/band-page/band-page.html",
@@ -16,25 +19,14 @@ import {Component} from "@angular/core";
 export class BandPage {
     private _global_vars: GlobalVarsService;
 
-    private band;
-    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
+    private band:Band;
+    options: Array<Action>;
 
     constructor(public nav: NavController, private navParams: NavParams, private _band_service: BandService, private loadingCtrl: LoadingController, private modalCtrl: ModalController) {
         this._global_vars = GlobalVarsService.getInstance();
         this.band = this.navParams.get("band");
         this._band_service.setAuthToken(this._global_vars.getVar("authtoken"));
-        this.options = [
-            {
-                icon: "person-add",
-                text: "Nuevo miembro",
-                value: "add_member"
-            },
-            {
-                icon: "remove-circle",
-                text: "Echar a miembro",
-                value: "remove_member"
-            },
-        ]
+
     }
     ngOnInit() {
 
@@ -45,6 +37,37 @@ export class BandPage {
         this._band_service.getband(this.band.id).then(
             (data) => {
                 this.band = data;
+                this.options = [
+                    {
+                        icon: "person-add",
+                        text: "Nuevo miembro",
+                        value: "add_member",
+                        callBack: this.nav_to_event,
+                        thisObj:this,
+                        cbParams: [this.band.events[0]]
+
+                    },
+                    {
+                        icon: "remove-circle",
+                        text: "Echar a miembro",
+                        value: "remove_member"
+                    },
+                    {
+                        icon: "create",
+                        text: "Modificar",
+                        value: "edit_band"
+                    },
+                    {
+                        icon: "calendar",
+                        text: "Añadir evento",
+                        value: "add_event"
+                    },
+                    {
+                        icon: "warning",
+                        text: "Salir del grupo",
+                        value: "exit_band"
+                    }
+                ];
                 loading.dismiss();
             }
         );
@@ -60,5 +83,9 @@ export class BandPage {
     }
     public nav_to_event(event: any) {
         this.nav.push(EventPage, { eventId: event.id })
+    }
+
+    log(ev){
+        console.log(ev);
     }
 }

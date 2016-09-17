@@ -18,9 +18,39 @@ import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
 export class EventListPage {
     private _events: Event[];
     private filterdEvents: Event[];
+    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
+
+
     constructor(public nav: NavController, private _navParams: NavParams) {
         this._events = this._navParams.get('events');
         this.filterdEvents = this._events;
+        this.options = [
+            {
+                icon: "person-add",
+                text: "Nuevo miembro",
+                value: "add_member"
+            },
+            {
+                icon: "remove-circle",
+                text: "Echar a miembro",
+                value: "remove_member"
+            },
+            {
+                icon: "create",
+                text: "Modificar",
+                value: "edit_band"
+            },
+            {
+                icon: "calendar",
+                text: "Añadir evento",
+                value: "add_event"
+            },
+            {
+                icon: "warning",
+                text: "Salir del grupo",
+                value: "exit_band"
+            }
+        ];
     }
 
     filterEvents(ev) {
