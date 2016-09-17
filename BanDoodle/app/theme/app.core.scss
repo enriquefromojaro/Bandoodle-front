@@ -36,3 +36,42 @@ ion-tabs ion-navbar-section ion-navbar .back-button {
 navbar-menu + ion-content scroll-content, navbar-menu + ion-tabs ion-content scroll-content{
     margin-top: 56px;
 }
+
+body ion-app {
+  overflow: visible;
+}
+
+ion-page {
+  display: flex;
+}
+
+ion-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+body.has-scrollbar scroll-content {
+  margin-right: -15px;
+}
+
+body.has-scrollbar ion-menu scroll-content {
+  margin-right: 15px;
+}
+
+scroll-content {
+  overflow-y: scroll;
+}
+
+// ion-menu ion-backdrop{
+//     display: none;
+// }
+
+ion-menu{
+    top:57px;
+    max-width: 50%;
+    overflow-x: hidden;
+}
+
+ion-menu .menu-inner {
+    margin-left: 15px;
+}

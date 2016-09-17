@@ -77,12 +77,10 @@ export class MyApp {
     }
 
     openPage(page: any, band?: any) {
-        this.menu.close();
         this.nav.setRoot(page);
     }
 
     openBandPage(band: any) {
-        this.menu.close();
         this.nav.setRoot(BandPage, { band: band });
     }
     ngOnInit() {
@@ -93,7 +91,7 @@ export class MyApp {
                 this.groups = [];
             else {
                 this.groups = value.bands;
-                //this.user = value;
+                this.user = value;
             }
         });
     }
@@ -124,10 +122,18 @@ export class MyApp {
         }, error => alert(error))
     }
     createBand() {
-        console.log('app user: ', this.user);
         let createModal = this.modalCtrl.create(BandFormModal, { user: this.user });
         createModal.present();
     }
+
+    openLog(){
+        console.log('Open', this.menu.isOpen());
+    }
+
+    closeLog(){
+        console.log('Close');
+    }
 }
+
 
 ionicBootstrap(MyApp);

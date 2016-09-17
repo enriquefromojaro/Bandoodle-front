@@ -21,6 +21,8 @@ export class EventPage {
     tab1Root: any;
     tab2Root: any;
     tab3Root: any;
+    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
+
     private _global_vars:GlobalVarsService;
     event:Event;
     params:{[key:string]:any}
@@ -36,6 +38,25 @@ export class EventPage {
         let loading = this.loadingCtrl.create({
             content: "Loading...",
         });
+
+        this.options = [
+            {
+                icon: "calendar",
+                text: "Añadir/Modificar opción(es)",
+                value: "add_option"
+            },
+            {
+                icon: "remove-circle",
+                text: "Eliminar evento",
+                value: "remove_event"
+            },
+            {
+                icon: "create",
+                text: "Modificar",
+                value: "edit_event"
+            }
+        ];
+
         this._event_service.setAuthToken(this._global_vars.getVar('authtoken'));
         loading.present()
         this.params = {

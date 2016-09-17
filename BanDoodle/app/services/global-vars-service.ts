@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Observable} from '../../node_modules/rxjs/Observable';
-import {Subject} from '../../node_modules/rxjs/Subject';
+import {Injectable} from "@angular/core";
+import {Observable} from "../../node_modules/rxjs/Observable";
+import {Subject} from "../../node_modules/rxjs/Subject";
 
 @Injectable()
 export class GlobalVarsService {
@@ -32,11 +32,11 @@ export class GlobalVarsService {
 
     public setVar(var_name: string, value: any): void {
         if (var_name === null || var_name.length === 0) {
-            throw new ReferenceError('Variable name must not be null, undefined or empty string');
+            throw new ReferenceError("Variable name must not be null, undefined or empty string");
         }
 
         if (!this.global_vars.has(var_name)) {
-            throw new ReferenceError('Does not exist global variable "' + var_name + '"');
+            throw new ReferenceError(`Does not exist global variable "${var_name}"`);
         }
         else {
             this.updateObservables(var_name, value);
@@ -46,11 +46,11 @@ export class GlobalVarsService {
 
     public addVar(var_name: string, value: any): void {
         if (var_name === null || var_name.length === 0) {
-            throw new ReferenceError('Variable name must not be null, undefined or empty string');
+            throw new ReferenceError("Variable name must not be null, undefined or empty string");
         }
 
         if (this.global_vars.has(var_name)) {
-            throw new ReferenceError('Global variable "' + var_name + '" already exists');
+            throw new ReferenceError('Global variable "" + var_name + "" already exists');
         }
         else {
             this.global_vars.set(var_name, value);
@@ -61,6 +61,11 @@ export class GlobalVarsService {
         if (this.observables.has(var_name)) {
             this.observables.get(var_name).next(value);
         }
+    }
+
+    public clear(){
+        this.observables.clear();
+        this.global_vars.clear();
     }
 
 }

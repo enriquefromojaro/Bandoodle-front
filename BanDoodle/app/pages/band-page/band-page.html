@@ -1,29 +1,29 @@
-<navbar-menu [title]='band.name'[menuMode]='true'></navbar-menu>
+<navbar-menu [title]='band.name' [menuMode]='true' [options]='options' (action)="log($event)"></navbar-menu>
 
 <ion-content padding class="band-page">
-    <ion-card>
+  <ion-card>
 
-        <ion-card-header>
-            Miembros
-        </ion-card-header>
+    <ion-card-header>
+      Miembros
+    </ion-card-header>
 
-        <ion-card-content class="inline-content">
-            <ion-item *ngFor='let u of band.users' class="user-rep">
-                <ion-avatar item-left>
-                    {{u.username}}
-                    <img src="{{u.avatar}}" />
-                </ion-avatar>
-            </ion-item>
-            <ion-icon name="ios-more" item-right (click)='show_users()'></ion-icon>
-        </ion-card-content>
+    <ion-card-content class="inline-content">
+      <ion-item *ngFor='let u of band.users' class="user-rep">
+        <ion-avatar item-left>
+          {{u.username}}
+          <img src="{{u.avatar}}" />
+        </ion-avatar>
+      </ion-item>
+      <ion-icon name="ios-more" item-right (click)='show_users()'></ion-icon>
+    </ion-card-content>
 
-    </ion-card>
-    <ion-list *ngIf='band.events'>
-        <ion-list-header>Eventos</ion-list-header>
-        <button ion-item *ngFor='let e of band.events| slice:0:6' (click)='nav_to_event(e)'>
+  </ion-card>
+  <ion-list *ngIf='band.events'>
+    <ion-list-header>Eventos</ion-list-header>
+    <button ion-item *ngFor='let e of band.events| slice:0:6' (click)='nav_to_event(e)'>
             {{e.name}}
         </button>
-        <a (click)='show_events()'>Ver todos</a>
-    </ion-list>
+    <a (click)='show_events()'>Ver todos</a>
+  </ion-list>
 
 </ion-content>
