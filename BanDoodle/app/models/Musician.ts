@@ -21,7 +21,7 @@ export class Musician {
                 this.bands = data.bands.map((band) => new Band(band));
             else
                 this.bands = [];
-                
+
             this.avatar = data.avatar;
             if (!this.avatar.startsWith('http')) {
                 this.avatar = BACKEND_ROOT + this.avatar;
@@ -36,4 +36,6 @@ export class Musician {
     public set id(id: number) {
         this._id = id;
     }
+
 }
+//Musician.prototype.

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Invitar a la banda
+    </ion-title>
+    <ion-buttons start>
+      <button (click)="close()">
+                <span primary showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="">
+  <ion-list [virtualScroll]="users">
+    <ion-card *virtualItem="let user">
+      <ion-card-header>
+        <ion-avatar>
+          <img src="{{user.avatar}}" />
+        </ion-avatar>
+        {{user.username}}
+      </ion-card-header>
+      <ion-card-content>
+        <div>
+          {{user.first_name}} {{user.lat_name}}
+        </div>
+        <div>
+          {{user.email}}
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+</ion-content>
