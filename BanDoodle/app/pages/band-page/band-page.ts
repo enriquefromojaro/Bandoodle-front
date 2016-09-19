@@ -5,6 +5,7 @@ import {GlobalVarsService} from "../../services/global-vars-service";
 import {Page, NavController, NavParams, LoadingController, ModalController} from "ionic-angular";
 import {NavBarMenuComponent} from "../../components/navBarMenu/navBarMenu";
 import {Action} from "../../components/pop-over/pop-over";
+import {InviteUsersModal} from "../../components/invite-users-modal/invite-users-modal";
 import {EventListPage} from "../event-list/event-list";
 import {Component} from "@angular/core";
 
@@ -42,9 +43,9 @@ export class BandPage {
                         icon: "person-add",
                         text: "Nuevo miembro",
                         value: "add_member",
-                        callBack: this.nav_to_event,
+                        callBack: this.addMembers,
                         thisObj:this,
-                        cbParams: [this.band.events[0]]
+                        cbParams: []
 
                     },
                     {
@@ -83,6 +84,11 @@ export class BandPage {
     }
     public nav_to_event(event: any) {
         this.nav.push(EventPage, { eventId: event.id })
+    }
+
+    addMembers(){
+        let modal = this.modalCtrl.create(InviteUsersModal, {band:this.band});
+        modal.present();
     }
 
     log(ev){

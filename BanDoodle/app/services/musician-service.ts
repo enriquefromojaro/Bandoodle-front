@@ -31,9 +31,6 @@ export class MusicianService {
 
     private extractData(res: Response): Musician[] {
         let musicians = res.json();
-        for (let key in musicians) {
-            musicians[key] = new Musician(musicians[key]);
-        }
         return musicians;
     }
 

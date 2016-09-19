@@ -66,4 +66,11 @@ export class BandService {
         }).toPromise();
     }
 
+    public partialUpdateBand(id:number, data:Band | Object){
+        return this.http.patch(`${this.base_url}${id}/`, data, this._common_headers).toPromise().then(
+            res => res.json(),
+            (err?) => console.log(err)
+        ).catch((err?) => console.error(err));
+    }
+
 }

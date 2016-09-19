@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Invitar a la banda
+    </ion-title>
+    <ion-buttons start>
+      <button (click)="close()">
+                <span primary showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+            </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]='text'></ion-searchbar>
+    <button [disabled]='invited_users.length<0' (click)='invite()'>Invitar</button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="">
+
+  <ion-list [virtualScroll]="users | filter:text:'username'">
+    <ion-item *virtualItem=" let user ">
+      <ion-label>
+        <ion-avatar>
+          <img src="{{user.avatar}} " />
+        </ion-avatar>
+        {{user.username}}
+      </ion-label>
+      <ion-checkbox dark item-right (click)='toogleInvitation(user)'></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
