@@ -21,13 +21,12 @@ export class EventPage {
     tab1Root: any;
     tab2Root: any;
     tab3Root: any;
-    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
 
     private _global_vars:GlobalVarsService;
     event:Event;
-    params:{[key:string]:any}
+    params:{[key:string]:any};
 
-    constructor(public nav: NavController, private _navParams:NavParams, public _event_service:EventService, private loadingCtrl:LoadingController) {
+    constructor(private nav: NavController, private _navParams:NavParams, public _event_service:EventService, private loadingCtrl:LoadingController) {
         // set the root pages for each tab
         this.tab1Root = VoteOptionsPage;
         this.tab2Root = GeneralPage;
@@ -39,23 +38,6 @@ export class EventPage {
             content: "Loading...",
         });
 
-        this.options = [
-            {
-                icon: "calendar",
-                text: "Añadir/Modificar opción(es)",
-                value: "add_option"
-            },
-            {
-                icon: "remove-circle",
-                text: "Eliminar evento",
-                value: "remove_event"
-            },
-            {
-                icon: "create",
-                text: "Modificar",
-                value: "edit_event"
-            }
-        ];
 
         this._event_service.setAuthToken(this._global_vars.getVar('authtoken'));
         loading.present()
@@ -65,7 +47,7 @@ export class EventPage {
         }
         this._event_service.getEvent(id).then(
             (data) => {
-                this.event = new Event(data.name, data.type, data.direction, data.time_options, data.id, data.description);
+                this.event = new Event(data.name, data.type, data.address, data.time_options, data.id, data.description);
                 loading.dismiss();
                 this.params['event'].next(this.event);
                 this.params['event']= this.event;

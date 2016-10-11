@@ -4,16 +4,16 @@ export class Event {
     private _id: number;
     public name: string;
     public type: string;
-    public direction: string;
+    public address: string;
     public time_options: TimeOption[];
 
-    constructor(name: string, type: string, direction: string, time_options: TimeOption[] | any[], id?: number, description?:string) {
+    constructor(name: string, type: string, address: string, time_options: TimeOption[] | any[], id?: number, description?:string) {
         if (id) {
             this._id = id;
         }
         this.name = name;
         this.type = type;
-        this.direction = direction;
+        this.address = address;
         if (time_options && time_options.length > 0 && time_options instanceof TimeOption) {
             this.time_options = <TimeOption[]>time_options;
         }

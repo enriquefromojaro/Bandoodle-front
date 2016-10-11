@@ -14,7 +14,7 @@ export class GlobalVarsService {
       return GlobalVarsService.singleton;
     }
 
-    public constructor (){
+    constructor (){
       this.global_vars = new Map<string,any>();
       this.observables = new Map<string,Subject<any>>();
     }

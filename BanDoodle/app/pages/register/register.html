@@ -1,44 +1,48 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>Regístrate</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>Regístrate</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content padding class="register">
+  <form #regForm='ngForm'>
     <ion-list>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" [(ngModel)]='user.username' required name='username'></ion-input>
+      </ion-item>
 
-        <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input type="text" [(ngModel)]='user.username'></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]='password' required name='password'></ion-input>
+      </ion-item>
 
-        <ion-item>
-            <ion-label floating>Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]='password'></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Repita la contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]='rep_pass' name='rep_password'></ion-input>
+      </ion-item>
+      <ion-item *ngIf='rep_pass !== password'>
+        <span style="color:red;">Las contraseñas no coinciden</span>
+      </ion-item>
 
-        <ion-item>
-            <ion-label floating>Repita la contraseña</ion-label>
-            <ion-input type="password"></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]='user.first_name' required name='first_name'></ion-input>
+      </ion-item>
 
-        <ion-item>
-            <ion-label floating>Nombre</ion-label>
-            <ion-input type="text" [(ngModel)]='user.first_name'></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Apellidos</ion-label>
+        <ion-input type="text" [(ngModel)]='user.last_name' required name='last_name'></ion-input>
+      </ion-item>
 
-        <ion-item>
-            <ion-label floating>Apellidos</ion-label>
-            <ion-input type="text" [(ngModel)]='user.last_name'></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>email</ion-label>
-          <ion-input type="email" [(ngModel)]='user.email'></ion-input>
-        </ion-item>
-        <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
-        <button (click)='submit()'>Submit</button>
+      <ion-item>
+        <ion-label floating>email</ion-label>
+        <ion-input type="email" [(ngModel)]='user.email' required name='email'></ion-input>
+      </ion-item>
+      <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
+      <button (click)='submit()' [disabled]="!regForm.form.valid || rep_pass !== password || !avatar">Submit</button>
 
     </ion-list>
+  </form>
 </ion-content>

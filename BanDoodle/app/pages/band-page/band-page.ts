@@ -1,15 +1,17 @@
-import {EventPage} from "../event-page/event-page";
-import {UserListModal} from "../../components/user-list-modal/user-list-modal";
-import {BandService} from "../../services/band-service";
-import {GlobalVarsService} from "../../services/global-vars-service";
-import {Page, NavController, NavParams, LoadingController, ModalController} from "ionic-angular";
-import {NavBarMenuComponent} from "../../components/navBarMenu/navBarMenu";
-import {Action} from "../../components/pop-over/pop-over";
-import {InviteUsersModal} from "../../components/invite-users-modal/invite-users-modal";
-import {EventListPage} from "../event-list/event-list";
-import {Component} from "@angular/core";
+import {WelcomePage} from "../welcome-page/welcome-page";
+import {Musician} from "../../models/Musician";
+import { EventPage } from "../event-page/event-page";
+import { UserListModal } from "../../components/user-list-modal/user-list-modal";
+import { BandService } from "../../services/band-service";
+import { GlobalVarsService } from "../../services/global-vars-service";
+import { Page, NavController, NavParams, LoadingController, ModalController, AlertController } from "ionic-angular";
+import { NavBarMenuComponent } from "../../components/navBarMenu/navBarMenu";
+import { Action } from "../../components/pop-over/pop-over";
+import { InviteUsersModal } from "../../components/invite-users-modal/invite-users-modal";
+import { EventListPage } from "../event-list/event-list";
+import { Component } from "@angular/core";
 
-import {Band} from "../../models/Band";
+import { Band } from "../../models/Band";
 
 @Component({
     templateUrl: "build/pages/band-page/band-page.html",
@@ -20,10 +22,13 @@ import {Band} from "../../models/Band";
 export class BandPage {
     private _global_vars: GlobalVarsService;
 
-    private band:Band;
+    private band: Band;
     options: Array<Action>;
 
-    constructor(public nav: NavController, private navParams: NavParams, private _band_service: BandService, private loadingCtrl: LoadingController, private modalCtrl: ModalController) {
+    constructor(public nav: NavController, private navParams: NavParams,
+        private _band_service: BandService, private loadingCtrl: LoadingController,
+        private modalCtrl: ModalController, private alertCtrl: AlertController) {
+
         this._global_vars = GlobalVarsService.getInstance();
         this.band = this.navParams.get("band");
         this._band_service.setAuthToken(this._global_vars.getVar("authtoken"));
@@ -44,29 +49,32 @@ export class BandPage {
                         text: "Nuevo miembro",
                         value: "add_member",
                         callBack: this.addMembers,
-                        thisObj:this,
+                        thisObj: this,
                         cbParams: []
 
                     },
-                    {
-                        icon: "remove-circle",
-                        text: "Echar a miembro",
-                        value: "remove_member"
-                    },
-                    {
-                        icon: "create",
-                        text: "Modificar",
-                        value: "edit_band"
-                    },
-                    {
-                        icon: "calendar",
-                        text: "Añadir evento",
-                        value: "add_event"
-                    },
+                    // {
+                    //     icon: "remove-circle",
+                    //     text: "Echar a miembro",
+                    //     value: "remove_member"
+                    // },
+                    // {
+                    //     icon: "create",
+                    //     text: "Modificar",
+                    //     value: "edit_band"
+                    // },
+                    // {
+                    //     icon: "calendar",
+                    //     text: "Añadir evento",
+                    //     value: "add_event"
+                    // },
                     {
                         icon: "warning",
                         text: "Salir del grupo",
-                        value: "exit_band"
+                        value: "exit_band",
+                        callBack: this.removeBand,
+                        thisObj: this,
+                        cbParams: []
                     }
                 ];
                 loading.dismiss();
@@ -86,12 +94,42 @@ export class BandPage {
         this.nav.push(EventPage, { eventId: event.id })
     }
 
-    addMembers(){
-        let modal = this.modalCtrl.create(InviteUsersModal, {band:this.band});
+    addMembers() {
+        let modal = this.modalCtrl.create(InviteUsersModal, { band: this.band, authtoken: this._global_vars.getVar('authtoken')});
         modal.present();
     }
 
-    log(ev){
+    log(ev) {
         console.log(ev);
+    }
+
+    removeBand() {
+        var confAlert = this.alertCtrl.create({
+            title: 'Salir de la banda',
+            message: '¿Estás seguro que deseas salir de la banda?',
+            buttons: [
+                {
+                    text: "No",
+                    role: "cancel",
+                    handler: () => {
+
+                    }
+                },
+                {
+                    text: "Salir",
+                    handler: () => {
+                        this._band_service.deleteBand(this.band).then(
+                            (data?)=>{
+                                var user:Musician= this._global_vars.getVar('user');
+                                user.bands.splice((<Band[]> user.bands).findIndex(b => b.id === this.band.id));
+                                this._global_vars.setVar('user', user);
+                                this.nav.setRoot(WelcomePage);
+                            }
+                        );
+                    }
+                }
+            ]
+        });
+        confAlert.present();
     }
 }

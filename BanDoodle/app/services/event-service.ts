@@ -20,7 +20,7 @@ export class EventService {
         return this.http.get(this.base_url, this._common_headers).toPromise().then(this.extractData).catch(this.handleError);
     }
 
-    public getEvent(id: number): Promise<Event> {
+    public getEvent(id: number): Promise<any> {
         return this.http.get(this.base_url + id + '/', this._common_headers).toPromise().then(
             data => data.json()
         ).catch(this.handleError);
@@ -41,6 +41,13 @@ export class EventService {
     }
     public setAuthToken(token: string) {
         this._common_headers.headers.set('Authorization', 'Token ' + token);
+    }
+
+    public deleteEvent(event:Event):Promise<any>{
+        return this.http.delete(`${this.base_url}${event.id}/`, this._common_headers).toPromise().then(
+            (res?)=>res || 'Event deleted successfuly',
+            (err?)=>Promise.reject(err.mesage || err)
+        ).catch(err=>alert(err));
     }
 
 }

@@ -89,4 +89,13 @@ export class MusicianService {
         this._common_headers.headers.set("Authorization", "Token " + token)
     }
 
+    public rememberPass(username:string):Promise<any>{
+        return this.http.get(`${BACKEND_ROOT}/password-remember/${username}/`).toPromise().then(
+            res=> res.json().detail,
+            err => err.detail || err
+        ).catch(
+            err => console.error(err)
+        );
+    }
+
 }

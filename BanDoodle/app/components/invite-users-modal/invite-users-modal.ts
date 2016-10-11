@@ -10,21 +10,20 @@ import { GlobalVarsService } from "../../services/global-vars-service";
 @Component({
     selector: 'invite-users-modal',
     templateUrl: 'build/components/invite-users-modal/invite-users-modal.html',
-    providers: [MusicianService, GlobalVarsService, BandService],
+    providers: [MusicianService, BandService],
     pipes: [Filter]
 })
 export class InviteUsersModal {
 
     band: Band;
     users: Musician[];
-    globalVars: GlobalVarsService;
     invited_users: Musician[] = [];
 
     constructor(private viewCtrl: ViewController, private params: NavParams, private musicianService: MusicianService, private bandService: BandService) {
         this.band = params.get('band');
-        this.globalVars = GlobalVarsService.getInstance();
-        this.musicianService.setAuthToken(this.globalVars.getVar('authtoken'));
-        this.bandService.setAuthToken(this.globalVars.getVar('authtoken'));
+        var authtoken = params.get('authtoken');
+        this.musicianService.setAuthToken(authtoken);
+        this.bandService.setAuthToken(authtoken);
         this.musicianService.getAllMusicians().then(
             (users) => {
                 var bandUsersIndexes = (<Musician[]>this.band.users).map(u => u.id);

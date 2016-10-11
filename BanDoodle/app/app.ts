@@ -1,14 +1,14 @@
-import {Musician} from "./models/Musician";
-import {BandFormModal} from "./components/band-form-modal/band-form-modal";
-import {BandPage} from "./pages/band-page/band-page";
-import {Alert} from "ionic-angular/components/alert/alert";
-import {App, Platform, MenuController, NavController, ionicBootstrap, Nav, ModalController} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {LoginPage} from './pages/login/login';
-import {WelcomePage} from './pages/welcome-page/welcome-page';
-import {MusicianService} from './services/musician-service';
-import {GlobalVarsService} from './services/global-vars-service';
-import {ViewChild, Component } from '@angular/core';
+import { Musician } from "./models/Musician";
+import { BandFormModal } from "./components/band-form-modal/band-form-modal";
+import { BandPage } from "./pages/band-page/band-page";
+import { Alert } from "ionic-angular/components/alert/alert";
+import { App, Platform, MenuController, NavController, ionicBootstrap, Nav, ModalController, AlertController } from 'ionic-angular';
+import { StatusBar } from 'ionic-native';
+import { LoginPage } from './pages/login/login';
+import { WelcomePage } from './pages/welcome-page/welcome-page';
+import { MusicianService } from './services/musician-service';
+import { GlobalVarsService } from './services/global-vars-service';
+import { ViewChild, Component } from '@angular/core';
 // import '../node_modules/zone.js';
 // import 'reflect-metadata';
 
@@ -25,6 +25,7 @@ export class MyApp {
     musician_service: MusicianService;
     global_vars_service: GlobalVarsService
     groups: any;
+    alertCtrl:AlertController;
     user: Musician;
     @ViewChild(Nav) nav: Nav;
     private modalCtrl: ModalController;
@@ -35,16 +36,18 @@ export class MyApp {
             [Platform],
             [MenuController],
             [MusicianService],
-            [ModalController]
+            [ModalController],
+            [AlertController]
         ];
     }
-    constructor(app, platform, menu, musician_service, modalCtrl, nav ) {
+    constructor(app, platform, menu, musician_service, modalCtrl,alertCtrl, nav) {
         this.app = app;
         this.menu = menu;
         this.platform = platform;
         this.musician_service = musician_service;
         this.global_vars_service = GlobalVarsService.getInstance();
         this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
         var user = parseInt(localStorage.getItem('user'));
         var authtoken = localStorage.getItem('authtoken');
 
@@ -60,8 +63,8 @@ export class MyApp {
 
         }
         this.global_vars_service.getObservableVar('user').subscribe(
-            (data)=>{
-                this.user= data;
+            (data) => {
+                this.user = data;
             }
         );
         this.initializeApp();
@@ -71,12 +74,39 @@ export class MyApp {
         var self = this;
         this.platform.ready().then(() => {
             StatusBar.styleDefault();
+            console.log('platform ready');
+            this.platform.registerBackButtonAction(
+                () => {
+                    this.menu.close();
 
-            this.registerBackButtonListener();
+                    if (this.nav.canGoBack()) {
+                        this.nav.pop();
+                    }
+                    else{
+                        var confAlert = this.alertCtrl.create({
+                            message:'¿Seguro que deseas salir de la aplicación?',
+                            buttons:[
+                                {
+                                    text: "No",
+                                    role: "cancel",
+                                    handler: () => {}
+                                },
+                                {
+                                    text: "Salir",
+                                    handler: () => {
+                                        this.platform.exitApp();
+                                    }
+                                }
+                            ]
+                        });
+                        confAlert.present();
+                    }
+                }
+            );
         });
     }
 
-    openPage(page: any, band?: any) {
+    openPage(page: any) {
         this.nav.setRoot(page);
     }
 
@@ -84,7 +114,7 @@ export class MyApp {
         this.nav.setRoot(BandPage, { band: band });
     }
     ngOnInit() {
-
+        console.log('ngOnInit');
         this.global_vars_service.addVar('user', null);
         this.global_vars_service.getObservableVar('user').subscribe(value => {
             if (!value)
@@ -96,42 +126,9 @@ export class MyApp {
         });
     }
 
-    registerBackButtonListener() {
-        this.platform.backButton.observers = [];
-        this.platform.backButton.subscribe(() => {
-            this.menu.close();
-
-            if (this.nav.canGoBack()) {
-                this.nav.pop();
-
-                return;
-            }
-
-            let activePage = this.nav.getActive().instance;
-
-            let rootPages = [WelcomePage, LoginPage, BandPage];
-
-            // if current page is not in whitelistPage
-            // then back to DashboardPage first
-            if (rootPages.indexOf(activePage.constructor) < 0) {
-                this.nav.setRoot(LoginPage);
-            }
-            else {
-                this.platform.exitApp();
-            }
-        }, error => alert(error))
-    }
     createBand() {
         let createModal = this.modalCtrl.create(BandFormModal, { user: this.user });
         createModal.present();
-    }
-
-    openLog(){
-        console.log('Open', this.menu.isOpen());
-    }
-
-    closeLog(){
-        console.log('Close');
     }
 }
 

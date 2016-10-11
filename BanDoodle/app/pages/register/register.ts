@@ -1,6 +1,5 @@
 import {FileSelector} from "../../components/file-selector/file-selector";
 import {Musician} from "../../models/Musician";
-import {Page, NavController, ActionSheet} from 'ionic-angular';
 import {MusicianService} from '../../services/musician-service';
 import {Camera} from 'ionic-native';
 import {Component} from '@angular/core';
@@ -15,9 +14,9 @@ export class RegisterPage {
     user: Musician;
     avatar: File;
     password: string;
-    constructor(public nav: NavController, private musician_service: MusicianService) {
+    constructor(private musician_service: MusicianService) {
         this.user = new Musician();
-        this.avatar = new File([], 'patata.png');
+        this.avatar = null;
     }
 
     submit() {
