@@ -57,7 +57,7 @@ export class DespDateVotingComponent implements OnInit {
             },
             (reasson?) => {
                 this.avaiable[index] = !this.avaiable[index];
-                console.log('Denegado:', reasson);
+                alert('Denegado:'+ reasson);
             }
 
         );

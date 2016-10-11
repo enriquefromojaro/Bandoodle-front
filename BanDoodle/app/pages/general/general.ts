@@ -12,7 +12,7 @@ import {Component} from '@angular/core';
 export class GeneralPage {
     event: Observable<Event> |Event;
     observable_event : boolean;
-    constructor(public nav: NavController, private _navParams: NavParams) {
+    constructor(private nav: NavController, private _navParams: NavParams) {
         var event = this._navParams.get('event');
         this.observable_event = event instanceof Subject;
         if(event instanceof Subject){

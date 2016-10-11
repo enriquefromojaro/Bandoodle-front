@@ -31,9 +31,6 @@ export class MusicianService {
 
     private extractData(res: Response): Musician[] {
         let musicians = res.json();
-        for (let key in musicians) {
-            musicians[key] = new Musician(musicians[key]);
-        }
         return musicians;
     }
 
@@ -90,6 +87,15 @@ export class MusicianService {
 
     public setAuthToken(token: string): void {
         this._common_headers.headers.set("Authorization", "Token " + token)
+    }
+
+    public rememberPass(username:string):Promise<any>{
+        return this.http.get(`${BACKEND_ROOT}/password-remember/${username}/`).toPromise().then(
+            res=> res.json().detail,
+            err => err.detail || err
+        ).catch(
+            err => console.error(err)
+        );
     }
 
 }

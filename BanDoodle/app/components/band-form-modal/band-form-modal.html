@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> Miembros </ion-title>
+    <ion-title> Crear una banda </ion-title>
     <ion-buttons start>
       <button (click)="close()">
                 <span primary showWhen="ios">Cancel</span>
@@ -10,22 +10,24 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-item>
-    <ion-label floating>Nombre</ion-label>
-    <ion-input type="text" [(ngModel)]='band.name'></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Genero</ion-label>
-    <ion-select [(ngModel)]='band.genre'>
-      <ion-option>Rock</ion-option>
-      <ion-option>Rock & Roll</ion-option>
-      <ion-option>Metal</ion-option>
-      <ion-option>Heavy Metal</ion-option>
-      <ion-option>Deathtukada</ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
-  </ion-item>
-  <button (click)='createBand()'>Crear</button>
+  <form #crBandForm='ngForm'>
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]='band.name' name='name' required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Genero</ion-label>
+      <ion-select [(ngModel)]='band.genre' name='benre' required>
+        <ion-option>Rock</ion-option>
+        <ion-option>Rock & Roll</ion-option>
+        <ion-option>Metal</ion-option>
+        <ion-option>Heavy Metal</ion-option>
+        <ion-option>Deathtukada</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <file-selector [file]='avatar' (fileChangeEmitter)='avatar = $event'></file-selector>
+    </ion-item>
+    <button (click)='createBand()' [disabled]='!crBandForm.valid'>Crear</button>
+  </form>
 </ion-content>

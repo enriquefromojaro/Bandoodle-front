@@ -26,8 +26,8 @@
             Dirección
         </ion-card-header>
         <ion-card-content>
-            <span *ngIf="observable_event"> {{(event | async)?.direction}}</span>
-            <span *ngIf="!observable_event"> {{event?.direction}}</span>
+            <span *ngIf="observable_event"> {{(event | async)?.address}}</span>
+            <span *ngIf="!observable_event"> {{event?.address}}</span>
         </ion-card-content>
     </ion-card>
 </ion-content>

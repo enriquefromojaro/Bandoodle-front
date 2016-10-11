@@ -1,4 +1,4 @@
-<navbar-menu [title]='"Eventos"' [options]='options'></navbar-menu>
+<navbar-menu [title]='"Eventos"'></navbar-menu>
 
 
 
@@ -9,12 +9,10 @@
       <span (click)='openEvent(event)'>
                 {{event.name}} -- {{event.type}}
             </span>
-      <button danger>
+      <button danger (click)='removeEvent(event)'>
                 <ion-icon name="trash"></ion-icon>
             </button>
     </ion-item>
   </ion-list>
-  <button fab (click)="debugMe(day)">
-        <ion-icon name="add"></ion-icon>
-    </button>
+
 </ion-content>

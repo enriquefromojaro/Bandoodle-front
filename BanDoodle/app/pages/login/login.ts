@@ -1,15 +1,14 @@
-import {Page, NavController, LoadingController, AlertController} from 'ionic-angular';
-import {MusicianService} from '../../services/musician-service';
-import {GlobalVarsService} from '../../services/global-vars-service';
-import {WelcomePage} from '../welcome-page/welcome-page';
-import {MyApp} from '../../app';
-import {RegisterPage} from '../register/register';
-import {Component} from '@angular/core';
+import { Page, NavController, LoadingController, AlertController } from 'ionic-angular';
+import { MusicianService } from '../../services/musician-service';
+import { GlobalVarsService } from '../../services/global-vars-service';
+import { WelcomePage } from '../welcome-page/welcome-page';
+import { RegisterPage } from '../register/register';
+import { Component } from '@angular/core';
 
 
 @Component({
     templateUrl: 'build/pages/login/login.html',
-    providers: [MusicianService, GlobalVarsService]
+    providers: [MusicianService, GlobalVarsService],
 })
 export class LoginPage {
     username: string;
@@ -24,10 +23,10 @@ export class LoginPage {
         loading.present();
         this.musician_service.login(this.username, this.password)
             .then(function(data) {
-                try{
+                try {
                     self.global_vars.setVar('user', data.user);
                 }
-                catch(ReferenceError){
+                catch (ReferenceError) {
                     self.global_vars.addVar('user', data.user);
 
                 }
@@ -59,11 +58,23 @@ export class LoginPage {
                 alert.present();
             });
     }
-    constructor(public nav: NavController, private musician_service: MusicianService, private alertCtrl:AlertController, private loadingCtrl:LoadingController) {
+    constructor(public nav: NavController, private musician_service: MusicianService,
+        private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
         this.global_vars = GlobalVarsService.getInstance();
     }
 
-    register(){
-      this.nav.push(RegisterPage);
+    register() {
+        this.nav.push(RegisterPage);
+    }
+
+    rememberPass() {
+
+        if (this.username && this.username.length > 0)
+            this.musician_service.rememberPass(this.username).then(
+                msg => alert(msg),
+                err => alert(err)
+            )
+        else
+            alert('Introduzca su nombre de usuario y vuelva a intentarlo');
     }
 }

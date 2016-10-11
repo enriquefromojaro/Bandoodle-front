@@ -1,9 +1,29 @@
 <navbar-menu [title]='"Welcome!!!"' [menuMode]='true'></navbar-menu>
 <ion-content padding class="welcome-page">
   <h2>
-    Welcome to Bandoodle!!!
+    Bienvenido a Bandoodle!!!
   </h2>
   <p>
-    We hope it will solve some of your needs as a band member
+    Esperamos que te sirvamos de ayuda
   </p>
+  <ion-list>
+    <ion-list-header>
+      Invitaciones pendientes
+    </ion-list-header>
+    <ion-item *ngFor='let inv of invitations'>
+      <ion-avatar>
+        <img ngSrc='inv.avatar' />
+      </ion-avatar>
+      {{inv.name}} - {{inv.genre}}
+      <button (click)='acceptInv(inv)'>
+              <ion-icon name='checkmark-circle'></ion-icon>
+          </button>
+      <!-- <button>
+              <ion-icon name='close-circle'></ion-icon>
+          </button> -->
+    </ion-item>
+  </ion-list>
+
+
+
 </ion-content>

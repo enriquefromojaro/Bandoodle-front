@@ -66,4 +66,34 @@ export class BandService {
         }).toPromise();
     }
 
+    public partialUpdateBand(id:number, data:Band | Object){
+        return this.http.patch(`${this.base_url}${id}/`, data, this._common_headers).toPromise().then(
+            res => res.json(),
+            (err?) => console.log(err)
+        ).catch((err?) => console.error(err));
+    }
+
+    public deleteBand(band:Band):Promise<any>{
+        return this.http.delete(`${this.base_url}${band.id}/`, this._common_headers).toPromise().then(
+            (res?)=>res || 'Event deleted successfuly',
+            (err?)=>Promise.reject(err.mesage || err)
+        ).catch(err=>alert(err));
+    }
+
+    public userInvitations():Promise<any>{
+        return this.http.get(`${this.base_url}invited_to_bands/`, this._common_headers).toPromise().then(
+            res=>res.json(),
+            (err?)=>Promise.reject(err.message || err.detail || err)
+        ).catch(
+            err=>console.error(err)
+        );
+    }
+
+    public acceptInvitationv(id:number|string):Promise<any>{
+        return this.http.patch(`${this.base_url}${id}/accept_invitation/`, {}, this._common_headers).toPromise().then(
+            res=>res.json(),
+            (err?)=>Promise.reject(err.message || err.details || err || 'Ocurrió un error')
+        ).catch(err=>console.error(err));
+    }
+
 }

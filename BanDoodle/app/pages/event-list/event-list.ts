@@ -1,3 +1,5 @@
+import {GlobalVarsService} from "../../services/global-vars-service";
+import {EventService} from "../../services/event-service";
 import {EventPage} from "../event-page/event-page";
 import {NavParams} from "ionic-angular/components/nav/nav-params";
 import {Page, NavController} from 'ionic-angular';
@@ -13,44 +15,21 @@ import {NavBarMenuComponent} from '../../components/navBarMenu/navBarMenu';
 */
 @Component({
     templateUrl: 'build/pages/event-list/event-list.html',
-    directives: [NavBarMenuComponent]
+    directives: [NavBarMenuComponent],
+    providers: [EventService, GlobalVarsService]
 })
 export class EventListPage {
     private _events: Event[];
-    private filterdEvents: Event[];
-    options: Array<{icon:string, text:string, value:string, callBack?:Function}>;
+    private filterdEvents: Event[]; //<--------------modifiar a pipe
+    private globalVars: GlobalVarsService
 
 
-    constructor(public nav: NavController, private _navParams: NavParams) {
+    constructor(public nav: NavController, private _navParams: NavParams, private eventServ:EventService) {
         this._events = this._navParams.get('events');
         this.filterdEvents = this._events;
-        this.options = [
-            {
-                icon: "person-add",
-                text: "Nuevo miembro",
-                value: "add_member"
-            },
-            {
-                icon: "remove-circle",
-                text: "Echar a miembro",
-                value: "remove_member"
-            },
-            {
-                icon: "create",
-                text: "Modificar",
-                value: "edit_band"
-            },
-            {
-                icon: "calendar",
-                text: "Añadir evento",
-                value: "add_event"
-            },
-            {
-                icon: "warning",
-                text: "Salir del grupo",
-                value: "exit_band"
-            }
-        ];
+
+        this.globalVars = GlobalVarsService.getInstance();
+        this.eventServ.setAuthToken(this.globalVars.getVar('authtoken'));
     }
 
     filterEvents(ev) {
@@ -67,5 +46,12 @@ export class EventListPage {
 
     openEvent(event:Event){
       this.nav.push(EventPage, {eventId:event.id});
+    }
+
+    removeEvent(event:Event){
+        this.eventServ.deleteEvent(event).then(
+            data=>this._events.splice(this._events.findIndex(ev=> ev.id === event.id),1),
+            err=>alert(err)
+        );
     }
 }

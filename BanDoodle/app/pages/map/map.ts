@@ -27,7 +27,7 @@ export class MapPage {
         var center: any;
         let map;
         var event = this.event;
-        geoCoder.geocode({ address: this.event.direction }, (results, status) => {
+        geoCoder.geocode({ address: this.event.address }, (results, status) => {
             if (status === google.maps.GeocoderStatus.OK) {
                 center = results[0].geometry.location;
                 map = new google.maps.Map(mapEle, {
@@ -40,7 +40,7 @@ export class MapPage {
                     position: center
                 });
 
-                let content = `<h4>${event.name} : ${event.direction}</h4>`;
+                let content = `<h4>${event.name} : ${event.address}</h4>`;
 
                 let infoWindow = new google.maps.InfoWindow({
                   content:content

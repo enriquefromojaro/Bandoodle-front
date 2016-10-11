@@ -3,10 +3,10 @@
         <ion-icon name="log-out"></ion-icon>
         Cerrar sesión
     </button>
-  <button ion-item (click)="close()">
+  <!-- <button ion-item (click)="close()">
         <ion-icon name="person"></ion-icon>
         Perfil
-    </button>
+    </button> -->
   <button ion-item (click)="execAction(opt)" *ngFor='let opt of options'>
         <ion-icon [name]="opt.icon"></ion-icon>
         {{opt.text}}

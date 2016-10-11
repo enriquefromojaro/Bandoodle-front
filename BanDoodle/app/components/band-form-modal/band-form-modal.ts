@@ -26,6 +26,8 @@ export class BandFormModal {
         this.globalVars = GlobalVarsService.getInstance();
         this.globalVars.getVar('authtoken');
         this.bandService.setAuthToken(this.globalVars.getVar('authtoken'));
+
+        this.viewCtrl.enableBack();
     }
 
     createBand(){
